@@ -12,11 +12,16 @@ class ScannetDataset():
         self.root = root
         self.split = split
         self.data_filename = os.path.join(self.root, 'scannet_%s.pickle' % (split))
-        with open(self.data_filename, 'rb') as fp:
-            try:
+        # with open(self.data_filename, 'rb') as fp:
+        #     self.scene_points_list = pickle.load(fp)
+        #     self.semantic_labels_list = pickle.load(fp)
+        try:
+            with open(self.data_filename, 'rb') as fp:
                 self.scene_points_list = pickle.load(fp)
                 self.semantic_labels_list = pickle.load(fp)
-            except:
+        except Exception as e:
+            print(e)
+            with open(self.data_filename, 'rb') as fp:
                 self.scene_points_list = pickle.load(fp, encoding='latin1')
                 self.semantic_labels_list = pickle.load(fp, encoding='latin1')
         if split == 'train':
@@ -76,9 +81,18 @@ class ScannetDatasetWholeScene():
         self.root = root
         self.split = split
         self.data_filename = os.path.join(self.root, 'scannet_%s.pickle' % (split))
-        with open(self.data_filename, 'rb') as fp:
-            self.scene_points_list = pickle.load(fp)
-            self.semantic_labels_list = pickle.load(fp)
+        # with open(self.data_filename, 'rb') as fp:
+        #     self.scene_points_list = pickle.load(fp)
+        #     self.semantic_labels_list = pickle.load(fp)
+        try:
+            with open(self.data_filename, 'rb') as fp:
+                self.scene_points_list = pickle.load(fp)
+                self.semantic_labels_list = pickle.load(fp)
+        except Exception as e:
+            print(e)
+            with open(self.data_filename, 'rb') as fp:
+                self.scene_points_list = pickle.load(fp, encoding='latin1')
+                self.semantic_labels_list = pickle.load(fp, encoding='latin1')
         if split == 'train':
             labelweights = np.zeros(21)
             for seg in self.semantic_labels_list:
@@ -137,9 +151,18 @@ class ScannetDatasetVirtualScan():
         self.root = root
         self.split = split
         self.data_filename = os.path.join(self.root, 'scannet_%s.pickle' % (split))
-        with open(self.data_filename, 'rb') as fp:
-            self.scene_points_list = pickle.load(fp)
-            self.semantic_labels_list = pickle.load(fp)
+        # with open(self.data_filename, 'rb') as fp:
+        #     self.scene_points_list = pickle.load(fp)
+        #     self.semantic_labels_list = pickle.load(fp)
+        try:
+            with open(self.data_filename, 'rb') as fp:
+                self.scene_points_list = pickle.load(fp)
+                self.semantic_labels_list = pickle.load(fp)
+        except Exception as e:
+            print(e)
+            with open(self.data_filename, 'rb') as fp:
+                self.scene_points_list = pickle.load(fp, encoding='latin1')
+                self.semantic_labels_list = pickle.load(fp, encoding='latin1')
         if split == 'train':
             labelweights = np.zeros(21)
             for seg in self.semantic_labels_list:
