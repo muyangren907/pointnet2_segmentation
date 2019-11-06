@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scannet/scannet_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/scannet/scannet_dataset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scannet/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/scannet/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,7 +45,7 @@
       <option name="presentableId" value="Default" />
       <updated>1573018934751</updated>
       <workItem from="1573018965046" duration="750000" />
-      <workItem from="1573021582746" duration="6864000" />
+      <workItem from="1573021582746" duration="9479000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1573022411649</created>
@@ -167,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573030096551</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fix TypeError: 'float' object cannot be interpreted as an integer">
+      <created>1573030597128</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1573030597128</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,6 +201,7 @@
     <MESSAGE value="fix ModuleNotFoundError: No module named 'model'" />
     <MESSAGE value="update" />
     <MESSAGE value="UnicodeDecodeError: 'ascii' codec can't decode byte 0xfc in position 1: ordinal not in range(128)" />
-    <option name="LAST_COMMIT_MESSAGE" value="UnicodeDecodeError: 'ascii' codec can't decode byte 0xfc in position 1: ordinal not in range(128)" />
+    <MESSAGE value="fix TypeError: 'float' object cannot be interpreted as an integer" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix TypeError: 'float' object cannot be interpreted as an integer" />
   </component>
 </project>
