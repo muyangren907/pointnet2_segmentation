@@ -24,7 +24,7 @@ import scannet_dataset
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
-parser.add_argument('--model', default='pointnet2_sem_seg', help='Model name [default: model]')
+parser.add_argument('--model', default='pointnet2_sem_seg', help='Model name [default: pointnet2_sem_seg]')
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=8192, help='Point Number [default: 8192]')
 parser.add_argument('--max_epoch', type=int, default=201, help='Epoch to run [default: 201]')
@@ -34,6 +34,9 @@ parser.add_argument('--momentum', type=float, default=0.9, help='Initial learnin
 parser.add_argument('--optimizer', default='adam', help='adam or momentum [default: adam]')
 parser.add_argument('--decay_step', type=int, default=200000, help='Decay step for lr decay [default: 200000]')
 parser.add_argument('--decay_rate', type=float, default=0.7, help='Decay rate for lr decay [default: 0.7]')
+# add data directory parser
+parser.add_argument('--data_dir', default='scannet_data_pointnet2',
+                    help='Data directory for data/ [default: scannet_data_pointnet2]')
 FLAGS = parser.parse_args()
 
 EPOCH_CNT = 0
@@ -47,11 +50,14 @@ MOMENTUM = FLAGS.momentum
 OPTIMIZER = FLAGS.optimizer
 DECAY_STEP = FLAGS.decay_step
 DECAY_RATE = FLAGS.decay_rate
+# add data directory parser
+DATA_DIR = FLAGS.data_dir
 
 MODEL = importlib.import_module(FLAGS.model)  # import network module
 MODEL_FILE = os.path.join(BASE_DIR, FLAGS.model + '.py')
 LOG_DIR = FLAGS.log_dir
-if not os.path.exists(LOG_DIR): os.mkdir(LOG_DIR)
+if not os.path.exists(LOG_DIR):
+    os.mkdir(LOG_DIR)
 os.system('cp %s %s' % (MODEL_FILE, LOG_DIR))  # bkp of model def
 os.system('cp train.py %s' % (LOG_DIR))  # bkp of train procedure
 LOG_FOUT = open(os.path.join(LOG_DIR, 'log_train.txt'), 'w')
@@ -64,10 +70,12 @@ BN_DECAY_CLIP = 0.99
 
 HOSTNAME = socket.gethostname()
 
-NUM_CLASSES = 21
+# NUM_CLASSES = 21
+NUM_CLASSES = 5
 
 # Shapenet official train/test split
-DATA_PATH = os.path.join(ROOT_DIR, 'data', 'scannet_data_pointnet2')
+# DATA_PATH = os.path.join(ROOT_DIR, 'data', 'scannet_data_pointnet2')
+DATA_PATH = os.path.join(ROOT_DIR, 'data', DATA_DIR)
 TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
 TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
 TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
@@ -476,6 +484,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
     EPOCH_CNT += 1
     # return caliacc
     return total_correct / float(total_seen)
+
 
 if __name__ == "__main__":
     log_string('pid: %s' % (str(os.getpid())))
