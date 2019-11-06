@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/scannet/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/scannet/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +43,7 @@
       <option name="presentableId" value="Default" />
       <updated>1573018934751</updated>
       <workItem from="1573018965046" duration="750000" />
-      <workItem from="1573021582746" duration="21599000" />
+      <workItem from="1573021582746" duration="21853000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1573022411649</created>
@@ -299,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573053542452</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="update">
+      <created>1573053824507</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1573053824507</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

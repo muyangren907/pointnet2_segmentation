@@ -24,7 +24,7 @@ for www in www_list:
         os.system('wget %s' % www)
         os.system('mv %s %s' % (zipfile, DATA_DIR))
         unzipfile = os.path.join(DATA_DIR, zipfile)
-        os.system('unzip %s -d %s' % (unzipfile, DATA_DIR))
+        os.system('unzip -q %s -d %s' % (unzipfile, DATA_DIR))
         os.system('rm %s' % unzipfile)
 
 
