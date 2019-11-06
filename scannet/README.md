@@ -8,6 +8,8 @@ Some code we used for scannet preprocessing is also included in `preprocessing` 
 
 Note: To use ScanNetV2 data, change the tsv file to `scannetv2-labels.combined.tsv` and also update `scannet_util.py` to read the raw class and NYU40 names in the right columns (shifted by 1 compared to the V1 tsv).
 
+NUM_CLASSES = 21 in `train.py`
+
 ### KITTI Data
 
 Make sure your hard drive has at least 60GB of free space
@@ -25,3 +27,5 @@ Make sure your hard drive has at least 60GB of free space
     https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip
 
 `kitti_utill.py` will help you download and unzip them, so you should run it before you run train.py
+
+NUM_CLASSES = 5 in `train.py`
