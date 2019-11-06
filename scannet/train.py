@@ -11,6 +11,7 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
+sys.path.append(os.path.join(ROOT_DIR, 'models'))
 sys.path.append(BASE_DIR)  # model
 sys.path.append(ROOT_DIR)  # provider
 sys.path.append(os.path.join(ROOT_DIR, 'utils'))
@@ -23,7 +24,7 @@ import scannet_dataset
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
-parser.add_argument('--model', default='model', help='Model name [default: model]')
+parser.add_argument('--model', default='pointnet2_sem_seg', help='Model name [default: model]')
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=8192, help='Point Number [default: 8192]')
 parser.add_argument('--max_epoch', type=int, default=201, help='Epoch to run [default: 201]')
