@@ -9,7 +9,7 @@ import pickle
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
-DATA_DIR = os.path.join(ROOT_DIR, 'data', 'kitti')
+DATA_DIR = os.path.join(ROOT_DIR, 'data')
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 if not os.path.exists(os.path.join(DATA_DIR, 'training')):
@@ -24,6 +24,7 @@ if not os.path.exists(os.path.join(DATA_DIR, 'training')):
         unzipfile = os.path.join(DATA_DIR, zipfile)
         os.system('unzip %s' % unzipfile)
         os.system('rm %s' % unzipfile)
+
 
 class Calibration(object):
     ''' Calibration matrices and utils
@@ -238,10 +239,10 @@ def inverse_rigid_trans(Tr):
 def dealdata2pickle(file_num):
     points_o_list, labelslist = [], []
 
-    save_object_pickle_path = DATA_DIR
+    save_object_pickle_path = os.path.join(DATA_DIR, 'kitti')
 
-    # if not os.path.exists(save_object_pickle_path):
-    #     os.makedirs(save_object_pickle_path)
+    if not os.path.exists(save_object_pickle_path):
+        os.makedirs(save_object_pickle_path)
 
     lidar_path = os.path.join(DATA_DIR, 'training', 'velodyne')
     label_path = os.path.join(DATA_DIR, 'training', 'label_2')

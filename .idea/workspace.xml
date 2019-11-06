@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scannet/kitti_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/scannet/kitti_util.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,7 +46,7 @@
       <option name="presentableId" value="Default" />
       <updated>1573018934751</updated>
       <workItem from="1573018965046" duration="750000" />
-      <workItem from="1573021582746" duration="15720000" />
+      <workItem from="1573021582746" duration="16472000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1573022411649</created>
@@ -229,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573047180713</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="update">
+      <created>1573047396268</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1573047396268</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
