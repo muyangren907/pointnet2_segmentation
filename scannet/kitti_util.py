@@ -1,5 +1,5 @@
 """
-Author: Muyangren907
+Author: muyangren907
 Date: 2019/11/6
 """
 import numpy as np
