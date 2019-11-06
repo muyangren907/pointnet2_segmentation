@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/tf_ops/grouping/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tf_ops/sampling/.gitignore" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1TEIfxV9dKqeECz13ZHbNLyyUUI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="" />
+      <created>1573018934751</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1573018934751</updated>
+      <workItem from="1573018965046" duration="750000" />
+      <workItem from="1573021582746" duration="4616000" />
+    </task>
+    <task id="LOCAL-00001" summary="update">
+      <created>1573022411649</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1573022411649</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update">
+      <created>1573022560974</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1573022560974</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update">
+      <created>1573023385956</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1573023385956</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update">
+      <created>1573023401200</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1573023401200</updated>
+    </task>
+    <task id="LOCAL-00005" summary="update">
+      <created>1573023474979</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1573023474979</updated>
+    </task>
+    <task id="LOCAL-00006" summary="update">
+      <created>1573023588915</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1573023588915</updated>
+    </task>
+    <task id="LOCAL-00007" summary="print -&gt; print()">
+      <created>1573023802155</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1573023802155</updated>
+    </task>
+    <task id="LOCAL-00008" summary="python2 -&gt; python3">
+      <created>1573023967800</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1573023967800</updated>
+    </task>
+    <task id="LOCAL-00009" summary="python2 -&gt; python3">
+      <created>1573024051471</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1573024051471</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update">
+      <created>1573024091501</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1573024091501</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update">
+      <created>1573024840005</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1573024840005</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix ModuleNotFoundError: No module named 'model'">
+      <created>1573026319447</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1573026319447</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="print -&gt; print()" />
+    <MESSAGE value="python2 -&gt; python3" />
+    <MESSAGE value="update" />
+    <MESSAGE value="fix ModuleNotFoundError: No module named 'model'" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix ModuleNotFoundError: No module named 'model'" />
+  </component>
+</project>
