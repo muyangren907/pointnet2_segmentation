@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="" />
+    <list default="true" id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scannet/scannet_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/scannet/scannet_dataset.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +45,7 @@
       <option name="presentableId" value="Default" />
       <updated>1573018934751</updated>
       <workItem from="1573018965046" duration="750000" />
-      <workItem from="1573021582746" duration="4865000" />
+      <workItem from="1573021582746" duration="5695000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1573022411649</created>
@@ -142,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573027190938</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="update">
+      <created>1573027219338</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1573027219338</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,8 +177,8 @@
     </ignored-roots>
     <MESSAGE value="print -&gt; print()" />
     <MESSAGE value="python2 -&gt; python3" />
-    <MESSAGE value="update" />
     <MESSAGE value="fix ModuleNotFoundError: No module named 'model'" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix ModuleNotFoundError: No module named 'model'" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>
