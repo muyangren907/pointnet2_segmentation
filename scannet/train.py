@@ -338,12 +338,12 @@ def eval_one_epoch(sess, ops, test_writer):
     log_string('eval point avg class acc: %f' % (
         np.mean(np.array(total_correct_class[1:]) / (np.array(total_seen_class[1:], dtype=np.float) + 1e-6))))
     labelweights_vox = labelweights_vox[1:].astype(np.float32) / np.sum(labelweights_vox[1:].astype(np.float32))
-    caliweights = np.array(
-        [0.388, 0.357, 0.038, 0.033, 0.017, 0.02, 0.016, 0.025, 0.002, 0.002, 0.002, 0.007, 0.006, 0.022, 0.004, 0.0004,
-         0.003, 0.002, 0.024, 0.029])
-    log_string('eval point calibrated average acc: %f' % (
-        np.average(np.array(total_correct_class[1:]) / (np.array(total_seen_class[1:], dtype=np.float) + 1e-6),
-                   weights=caliweights)))
+    # caliweights = np.array(
+    #     [0.388, 0.357, 0.038, 0.033, 0.017, 0.02, 0.016, 0.025, 0.002, 0.002, 0.002, 0.007, 0.006, 0.022, 0.004, 0.0004,
+    #      0.003, 0.002, 0.024, 0.029])
+    # log_string('eval point calibrated average acc: %f' % (
+    #     np.average(np.array(total_correct_class[1:]) / (np.array(total_seen_class[1:], dtype=np.float) + 1e-6),
+    #                weights=caliweights)))
     per_class_str = 'vox based --------'
     for l in range(1, NUM_CLASSES):
         per_class_str += 'class %d weight: %f, acc: %f; ' % (
@@ -460,13 +460,13 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
         np.mean(np.array(total_correct_class[1:]) / (np.array(total_seen_class[1:], dtype=np.float) + 1e-6))))
     labelweights = labelweights[1:].astype(np.float32) / np.sum(labelweights[1:].astype(np.float32))
     labelweights_vox = labelweights_vox[1:].astype(np.float32) / np.sum(labelweights_vox[1:].astype(np.float32))
-    caliweights = np.array(
-        [0.388, 0.357, 0.038, 0.033, 0.017, 0.02, 0.016, 0.025, 0.002, 0.002, 0.002, 0.007, 0.006, 0.022, 0.004, 0.0004,
-         0.003, 0.002, 0.024, 0.029])
-    caliacc = np.average(
-        np.array(total_correct_class_vox[1:]) / (np.array(total_seen_class_vox[1:], dtype=np.float) + 1e-6),
-        weights=caliweights)
-    log_string('eval whole scene point calibrated average acc vox: %f' % caliacc)
+    # caliweights = np.array(
+    #     [0.388, 0.357, 0.038, 0.033, 0.017, 0.02, 0.016, 0.025, 0.002, 0.002, 0.002, 0.007, 0.006, 0.022, 0.004, 0.0004,
+    #      0.003, 0.002, 0.024, 0.029])
+    # caliacc = np.average(
+    #     np.array(total_correct_class_vox[1:]) / (np.array(total_seen_class_vox[1:], dtype=np.float) + 1e-6),
+    #     weights=caliweights)
+    # log_string('eval whole scene point calibrated average acc vox: %f' % caliacc)
 
     per_class_str = 'vox based --------'
     for l in range(1, NUM_CLASSES):
@@ -474,8 +474,8 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
             l, labelweights_vox[l - 1], total_correct_class_vox[l] / float(total_seen_class_vox[l]))
     log_string(per_class_str)
     EPOCH_CNT += 1
-    return caliacc
-
+    # return caliacc
+    return total_correct / float(total_seen)
 
 if __name__ == "__main__":
     log_string('pid: %s' % (str(os.getpid())))
