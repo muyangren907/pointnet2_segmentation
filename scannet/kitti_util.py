@@ -25,7 +25,7 @@ if not os.path.exists(os.path.join(DATA_DIR, 'training')):
             os.system('wget %s' % www)
             os.system('mv %s %s' % (zipfile, DATA_DIR))
         unzipfile = os.path.join(DATA_DIR, zipfile)
-        os.system('unzip %s %s' % (unzipfile, DATA_DIR))
+        os.system('unzip %s -d %s' % (unzipfile, DATA_DIR))
         os.system('rm %s' % unzipfile)
 
 
