@@ -8,7 +8,7 @@
 - GPU: Tesla K80
 - RAM: 755MiB / 26126MiB
 
-![environment](https://github.com/muyangren907/pointnet2_segmentation/blob/master/doc/environment.png)
+- ![environment](https://github.com/muyangren907/pointnet2_segmentation/blob/master/doc/environment.png)
 
 - TensorFlow 1.13.2
 - CUDA V10.0.130
