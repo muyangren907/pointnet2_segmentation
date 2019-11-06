@@ -13,32 +13,17 @@ DATA_DIR = os.path.join(ROOT_DIR, 'data', 'kitti')
 if not os.path.exists(DATA_DIR):
     os.mkdir(DATA_DIR)
 if not os.path.exists(os.path.join(DATA_DIR, 'training')):
-    if not os.path.exists(os.path.join(DATA_DIR,'data_object_velodyne.zip')):
-        www = 'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_velodyne.zip'
+    www_list = ['https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_velodyne.zip',
+                'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip',
+                'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip']
+    for www in www_list:
         zipfile = os.path.basename(www)
-        os.system('wget %s' % www)
-        os.system('mv %s %s' % (zipfile, DATA_DIR))
+        if not os.path.exists(os.path.join(DATA_DIR, zipfile)):
+            os.system('wget %s' % www)
+            os.system('mv %s %s' % (zipfile, DATA_DIR))
         unzipfile = os.path.join(DATA_DIR, zipfile)
         os.system('unzip %s' % unzipfile)
         os.system('rm %s' % unzipfile)
-    if not os.path.exists(os.path.join(DATA_DIR, 'data_object_label_2.zip')):
-        www = 'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip'
-        zipfile = os.path.basename(www)
-        os.system('wget %s' % www)
-        os.system('mv %s %s' % (zipfile, DATA_DIR))
-        unzipfile = os.path.join(DATA_DIR, zipfile)
-        os.system('unzip %s' % unzipfile)
-        os.system('rm %s' % unzipfile)
-    if not os.path.exists(os.path.join(DATA_DIR, 'data_object_calib.zip')):
-        www = 'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip'
-        zipfile = os.path.basename(www)
-        os.system('wget %s' % www)
-        os.system('mv %s %s' % (zipfile, DATA_DIR))
-        os.system('unzip ')
-        unzipfile = os.path.join(DATA_DIR, zipfile)
-        os.system('unzip %s' % unzipfile)
-        os.system('rm %s' % unzipfile)
-
 
 class Calibration(object):
     ''' Calibration matrices and utils
