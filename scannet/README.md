@@ -16,11 +16,11 @@ Make sure your hard drive has at least 60GB of free space
 
     https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_velodyne.zip
 
-- training labels of object data set (5 MB)
+- Training labels of object data set (5 MB)
 
     https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip
 
-- camera calibration matrices of object data set (16 MB)
+- Camera calibration matrices of object data set (16 MB)
 
     https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip
 
