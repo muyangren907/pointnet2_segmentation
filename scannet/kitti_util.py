@@ -12,7 +12,7 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
-    print(os.path.join(DATA_DIR, 'training'))
+
 if not os.path.exists(os.path.join(DATA_DIR, 'training')):
     www_list = [
         'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip',
@@ -21,7 +21,7 @@ if not os.path.exists(os.path.join(DATA_DIR, 'training')):
     ]
     for www in www_list:
         zipfile = os.path.basename(www)
-        if not os.path.exists(os.path.join(DATA_DIR, zipfile)):
+        if not os.path.exists(os.path.join(DATA_DIR, zipfile[:-4].replace('data_object_', ''))):
             os.system('wget %s' % www)
             os.system('mv %s %s' % (zipfile, DATA_DIR))
         unzipfile = os.path.join(DATA_DIR, zipfile)
