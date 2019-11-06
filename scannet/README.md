@@ -29,3 +29,5 @@ Make sure your hard drive has at least 60GB of free space
 `kitti_utill.py` will help you download and unzip them, so you should run it before you run train.py
 
 NUM_CLASSES = 5 in `train.py`
+
+--data_dir = kitti
