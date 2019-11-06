@@ -224,7 +224,7 @@ def train_one_epoch(sess, ops, train_writer):
     # Shuffle train samples
     train_idxs = np.arange(0, len(TRAIN_DATASET))
     np.random.shuffle(train_idxs)
-    num_batches = len(TRAIN_DATASET) / BATCH_SIZE
+    num_batches = int(len(TRAIN_DATASET) / BATCH_SIZE)
 
     log_string(str(datetime.now()))
 
@@ -299,7 +299,7 @@ def eval_one_epoch(sess, ops, test_writer):
         test_writer.add_summary(summary, step)
         pred_val = np.argmax(pred_val, 2)  # BxN
         correct = np.sum((pred_val == batch_label) & (batch_label > 0) & (
-                    batch_smpw > 0))  # evaluate only on 20 categories but not unknown
+                batch_smpw > 0))  # evaluate only on 20 categories but not unknown
         total_correct += correct
         total_seen += np.sum((batch_label > 0) & (batch_smpw > 0))
         loss_sum += loss_val
@@ -345,7 +345,7 @@ def eval_one_epoch(sess, ops, test_writer):
     per_class_str = 'vox based --------'
     for l in range(1, NUM_CLASSES):
         per_class_str += 'class %d weight: %f, acc: %f; ' % (
-        l, labelweights_vox[l - 1], total_correct_class[l] / float(total_seen_class[l]))
+            l, labelweights_vox[l - 1], total_correct_class[l] / float(total_seen_class[l]))
     log_string(per_class_str)
     EPOCH_CNT += 1
     return total_correct / float(total_seen)
@@ -418,7 +418,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
         test_writer.add_summary(summary, step)
         pred_val = np.argmax(pred_val, 2)  # BxN
         correct = np.sum((pred_val == batch_label) & (batch_label > 0) & (
-                    batch_smpw > 0))  # evaluate only on 20 categories but not unknown
+                batch_smpw > 0))  # evaluate only on 20 categories but not unknown
         total_correct += correct
         total_seen += np.sum((batch_label > 0) & (batch_smpw > 0))
         loss_sum += loss_val
@@ -467,7 +467,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
     per_class_str = 'vox based --------'
     for l in range(1, NUM_CLASSES):
         per_class_str += 'class %d weight: %f, acc: %f; ' % (
-        l, labelweights_vox[l - 1], total_correct_class_vox[l] / float(total_seen_class_vox[l]))
+            l, labelweights_vox[l - 1], total_correct_class_vox[l] / float(total_seen_class_vox[l]))
     log_string(per_class_str)
     EPOCH_CNT += 1
     return caliacc

@@ -20,7 +20,7 @@ class ScannetDataset():
                 self.scene_points_list = pickle.load(fp)
                 self.semantic_labels_list = pickle.load(fp)
         except Exception as e:
-            print(e)
+            # print(e)
             with open(self.data_filename, 'rb') as fp:
                 self.scene_points_list = pickle.load(fp, encoding='latin1')
                 self.semantic_labels_list = pickle.load(fp, encoding='latin1')
@@ -89,7 +89,7 @@ class ScannetDatasetWholeScene():
                 self.scene_points_list = pickle.load(fp)
                 self.semantic_labels_list = pickle.load(fp)
         except Exception as e:
-            print(e)
+            # print(e)
             with open(self.data_filename, 'rb') as fp:
                 self.scene_points_list = pickle.load(fp, encoding='latin1')
                 self.semantic_labels_list = pickle.load(fp, encoding='latin1')
@@ -159,7 +159,7 @@ class ScannetDatasetVirtualScan():
                 self.scene_points_list = pickle.load(fp)
                 self.semantic_labels_list = pickle.load(fp)
         except Exception as e:
-            print(e)
+            # print(e)
             with open(self.data_filename, 'rb') as fp:
                 self.scene_points_list = pickle.load(fp, encoding='latin1')
                 self.semantic_labels_list = pickle.load(fp, encoding='latin1')
