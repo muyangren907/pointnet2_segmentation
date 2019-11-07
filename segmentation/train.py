@@ -15,6 +15,7 @@ sys.path.append(os.path.join(ROOT_DIR, 'models'))
 sys.path.append(BASE_DIR)  # model
 sys.path.append(ROOT_DIR)  # provider
 sys.path.append(os.path.join(ROOT_DIR, 'utils'))
+
 import provider
 import tf_util
 import pc_util
@@ -76,9 +77,18 @@ NUM_CLASSES = 5
 # Shapenet official train/test split
 # DATA_PATH = os.path.join(ROOT_DIR, 'data', 'scannet_data_pointnet2')
 DATA_PATH = os.path.join(ROOT_DIR, 'data', DATA_DIR)
-TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
-TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
-TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
+if DATA_DIR == 'scannet_data_pointnet2':
+    if not os.path.exists(os.path.join(DATA_PATH, 'scannet_train.pickle')):
+        www = 'https://shapenet.cs.stanford.edu/media/scannet_data_pointnet2.zip'
+        zipfile = os.path.basename(www)
+        os.system('wget %s' % www)
+        os.system('mv %s %s' % (zipfile, os.path.join(ROOT_DIR, 'data')))
+        unzipfile = os.path.join(ROOT_DIR, 'data', zipfile)
+        os.system('unzip -q %s -d %s' % (unzipfile, os.path.join(ROOT_DIR, 'data')))
+        os.system('rm %s' % unzipfile)
+    TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
+    TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
+    TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
 
 
 def log_string(out_str):
