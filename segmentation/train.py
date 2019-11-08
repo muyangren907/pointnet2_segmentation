@@ -85,16 +85,17 @@ if DATA_DIR == 'scannet_data_pointnet2':
     NUM_CLASSES = 21
     www = 'https://shapenet.cs.stanford.edu/media/scannet_data_pointnet2.zip'
     zipfile = os.path.basename(www)
-    if not os.path.exists(os.path.join(DATA_PATH, 'scannet_train.pickle')):
+    if not os.path.exists(os.path.join(DATA_PATH, 'scannet_data_pointnet2.zip')):
         if DOWNLOADER == 'wget':
             os.system('wget %s' % www)
         elif DOWNLOADER == 'aria2':
             os.system('aria2c -x 15 -s 15 %s' % www)
         os.system('mv %s %s' % (zipfile, DATA_PATH))
-    unzipfile = os.path.join(DATA_PATH, zipfile)
-    os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
-    os.system('mv %s/* %s' % (os.path.join(DATA_PATH, 'data'), DATA_PATH))
-    os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
+    if not os.path.exists(os.path.join(DATA_PATH, 'scannet_train.pickle')):
+        unzipfile = os.path.join(DATA_PATH, zipfile)
+        os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
+        os.system('mv %s/* %s' % (os.path.join(DATA_PATH, 'data'), DATA_PATH))
+        os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
         # os.system('rm %s' % unzipfile)
         # path_old = os.path.join(ROOT_DIR, 'data', 'data')
         # path_new = os.path.join(ROOT_DIR, 'data', 'scannet_data_pointnet2')
