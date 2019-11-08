@@ -38,6 +38,7 @@ parser.add_argument('--decay_rate', type=float, default=0.7, help='Decay rate fo
 # add data directory parser
 parser.add_argument('--data_dir', type=str, default='scannet_data_pointnet2',
                     help='Data directory for data/ [default: scannet_data_pointnet2]')
+parser.add_argument('--downloader', type=str, default='wget', help='Downloader for download dataset')
 FLAGS = parser.parse_args()
 
 EPOCH_CNT = 0
@@ -53,6 +54,7 @@ DECAY_STEP = FLAGS.decay_step
 DECAY_RATE = FLAGS.decay_rate
 # add data directory parser
 DATA_DIR = FLAGS.data_dir
+DOWNLOADER = FLAGS.downloader
 
 MODEL = importlib.import_module(FLAGS.model)  # import network module
 MODEL_FILE = os.path.join(BASE_DIR, FLAGS.model + '.py')
@@ -84,7 +86,10 @@ if DATA_DIR == 'scannet_data_pointnet2':
     www = 'https://shapenet.cs.stanford.edu/media/scannet_data_pointnet2.zip'
     zipfile = os.path.basename(www)
     if not os.path.exists(os.path.join(DATA_PATH, 'scannet_train.pickle')):
-        os.system('wget %s' % www)
+        if DOWNLOADER == 'wget':
+            os.system('wget %s' % www)
+        elif DOWNLOADER == 'aria2':
+            os.system('aria2c -x 15 -s 15 %s' % www)
         os.system('mv %s %s' % (zipfile, DATA_PATH))
     unzipfile = os.path.join(DATA_PATH, zipfile)
     os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
