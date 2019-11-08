@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15f38163-77dd-4e60-8c82-25724cd9773d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/segmentation/dataset_selete.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/segmentation/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/segmentation/train.py" afterDir="false" />
     </list>
@@ -56,6 +55,7 @@
       <workItem from="1573018965046" duration="750000" />
       <workItem from="1573021582746" duration="22482000" />
       <workItem from="1573110500681" duration="4294000" />
+      <workItem from="1573198044190" duration="1774000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1573022411649</created>
@@ -351,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573136466475</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="update">
+      <created>1573198257199</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1573198257199</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
