@@ -94,7 +94,7 @@ if DATA_DIR == 'scannet_data_pointnet2':
     unzipfile = os.path.join(DATA_PATH, zipfile)
     os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
     os.system('mv %s/* %s' % (os.path.join(DATA_PATH, 'data'), DATA_PATH))
-    os.system('rm %s' % (os.path.join(DATA_PATH, 'data')))
+    os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
         # os.system('rm %s' % unzipfile)
         # path_old = os.path.join(ROOT_DIR, 'data', 'data')
         # path_new = os.path.join(ROOT_DIR, 'data', 'scannet_data_pointnet2')
