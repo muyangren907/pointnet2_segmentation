@@ -352,8 +352,8 @@ def dealdata2pickle(file_num):
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
-            del points_o_list
-            del labelslist
+            del points_o_list[:]
+            del labelslist[:]
             gc.collect()
             points_o_list = []
             labelslist = []
@@ -364,8 +364,8 @@ def dealdata2pickle(file_num):
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
-            del points_o_list
-            del labelslist
+            del points_o_list[:]
+            del labelslist[:]
             gc.collect()
             points_o_list = []
             labelslist = []
