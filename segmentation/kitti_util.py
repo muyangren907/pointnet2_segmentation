@@ -354,9 +354,9 @@ def dealdata2pickle(file_num):
             print('save', save_object_pickle_file, 'succeed!')
             del points_o_list[:]
             del labelslist[:]
-            gc.collect()
             points_o_list = []
             labelslist = []
+            gc.collect()
             # print('clear list succeed!')
         if data_id + 1 == file_num:
             save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_test.pickle')
@@ -366,9 +366,9 @@ def dealdata2pickle(file_num):
             print('save', save_object_pickle_file, 'succeed!')
             del points_o_list[:]
             del labelslist[:]
-            gc.collect()
             points_o_list = []
             labelslist = []
+            gc.collect()
             # print('clear list succeed!')
 
 
