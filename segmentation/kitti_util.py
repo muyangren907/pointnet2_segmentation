@@ -6,6 +6,18 @@ import numpy as np
 import os
 import pprint
 import pickle
+import psutil
+
+
+def get_memory_info():
+    virtual_memory = psutil.virtual_memory()
+    used_memory = virtual_memory.used / 1024 / 1024 / 1024
+    free_memory = virtual_memory.free / 1024 / 1024 / 1024
+    memory_percent = virtual_memory.percent
+    memory_info = "内存使用：%0.2fG，使用率%0.1f%%，剩余内存：%0.2fG" % (used_memory, memory_percent, free_memory)
+    # print(memory_info)
+    return memory_info
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -326,7 +338,7 @@ def dealdata2pickle(file_num):
         points_o, labels = points[:, :-1], points[:, -1:].reshape(points_shape[0], )
         points_o_list.append(points_o)
         labelslist.append(labels)
-        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, end='\r')
+        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, get_memory_info(), end='\r')
 
         if (data_id + 1) % 1000 == 0:
             file_name = ''
@@ -355,7 +367,6 @@ def dealdata2pickle(file_num):
             points_o_list = []
             labelslist = []
             print('clear list succeed!')
-
 
 
 # 获取文件夹下文件个数
