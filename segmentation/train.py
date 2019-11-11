@@ -224,7 +224,7 @@ def train():
             sys.stdout.flush()
 
             train_one_epoch(sess, ops, train_writer)
-            if epoch % 5 == 0:
+            if epoch == 1 or epoch % 5 == 0:
                 acc = eval_one_epoch(sess, ops, test_writer)
                 acc = eval_whole_scene_one_epoch(sess, ops, test_writer)
             if acc > best_acc:
