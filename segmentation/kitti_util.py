@@ -339,7 +339,8 @@ def dealdata2pickle(file_num):
         points_o, labels = points[:, :-1], points[:, -1:].reshape(points_shape[0], )
         points_o_list.append(points_o)
         labelslist.append(labels)
-        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, get_memory_info(), end='\r')
+        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, len(labelslist), get_memory_info(),
+              end='\r')
 
         if (data_id + 1) % 1000 == 0:
             file_name = ''
