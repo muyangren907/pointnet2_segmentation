@@ -16,6 +16,8 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
                 if DOWNLOADER == 'aria2':
                     # os.system('aria2c -x 15 -s 15 %s' % www)
                     cmd = 'aria2c -x 15 -s 15 %s' % www
+                elif DOWNLOADER == 'axel':
+                    cmd = 'axel -n 64 %s' % www
                 print(cmd)
                 os.system(cmd)
                 cmd = 'mv %s %s' % (zipfile, DATA_PATH)
@@ -44,6 +46,8 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
                 if DOWNLOADER == 'aria2':
                     # os.system('aria2c -x 15 -s 15 %s' % www)
                     cmd = 'aria2c -x 15 -s 15 %s' % www
+                elif DOWNLOADER == 'axel':
+                    cmd = 'axel -n 64 %s' % www
                 print(cmd)
                 os.system(cmd)
                 os.system('mv %s %s' % (zipfile, DATA_PATH))
@@ -52,7 +56,7 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
                 print(cmd)
                 os.system(cmd)
 
-        kitti_util.main()
+        kitti_util.main(DATA_PATH)
 
     return NUM_CLASSES
 
