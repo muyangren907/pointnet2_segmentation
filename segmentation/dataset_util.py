@@ -55,8 +55,15 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
                 cmd = 'unzip -q %s -d %s' % (unzipfile, DATA_PATH)
                 print(cmd)
                 os.system(cmd)
-
-        kitti_util.main()
+        file_num_path = os.path.join(DATA_PATH, 'training', 'velodyne')
+        file_num = len(os.listdir(file_num_path))
+        # kitti_util.main()
+        for i in range(0, file_num, 1000):
+            # gc.collect()
+            if i + 1000 < file_num:
+                kitti_util.dealdata2pickle(i, i + 1000,file_num)
+            else:
+                kitti_util.dealdata2pickle(i, file_num,file_num)
     print('DATASET:', DATASET, '\nDATA_PATH:', DATA_PATH, '\nNUM_CLASSES:', NUM_CLASSES)
     return NUM_CLASSES
 

@@ -9,7 +9,8 @@ import pickle
 import psutil
 import gc
 
-file_num = 0
+
+# file_num = 0
 
 
 def get_memory_info():
@@ -255,7 +256,7 @@ def inverse_rigid_trans(Tr):
     return inv_Tr
 
 
-def dealdata2pickle(spos, epos):
+def dealdata2pickle(spos, epos, file_num):
     points_o_list, labelslist = [], []
 
     # save_object_pickle_path = os.path.join(DATA_DIR, 'kitti')
@@ -390,9 +391,9 @@ def main():
     for i in range(0, file_num, 1000):
         gc.collect()
         if i + 1000 < file_num:
-            dealdata2pickle(i, i + 1000)
+            dealdata2pickle(i, i + 1000, file_num)
         else:
-            dealdata2pickle(i, file_num)
+            dealdata2pickle(i, file_num, file_num)
     # dealdata2pickle(file_num)
 
 
