@@ -342,8 +342,9 @@ def dealdata2pickle(spos, epos, file_num):
         points_o, labels = points[:, :-1], points[:, -1:].reshape(points_shape[0], )
         points_o_list.append(points_o)
         labelslist.append(labels)
-        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, get_memory_info(),
-              end='\r')
+        # print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, get_memory_info(),
+        #       end='\r')
+        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, end='\r')
 
         if (data_id + 1) % 1000 == 0:
             file_name = ''
@@ -356,25 +357,12 @@ def dealdata2pickle(spos, epos, file_num):
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
-            # del points_o_list[:]
-            # del labelslist[:]
-            # points_o_list = []
-            # labelslist = []
-            # gc.collect()
-            # print('clear list succeed!')
-        # if data_id + 1 == file_num:
         if data_id + 1 == 1400:
             save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_test.pickle')
             with open(save_object_pickle_file, 'wb') as pf:
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
-            # del points_o_list[:]
-            # del labelslist[:]
-            # points_o_list = []
-            # labelslist = []
-            # gc.collect()
-            # print('clear list succeed!')
 
 
 # 获取文件夹下文件个数
