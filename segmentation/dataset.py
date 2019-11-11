@@ -6,15 +6,19 @@ import pc_util
 import scene_util
 
 
+# TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train',dataname=DATASET)
+# TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
+# TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
+# NUM_CLASSES
+
 class Dataset():
-    def __init__(self, root, npoints=8192, split='train'):
-        self.npoints = npoints
+    def __init__(self, root, num_classes=21, npoints=8192, split='train', datasetname='scannet'):
         self.root = root
+        self.num_classes = num_classes
+        self.npoints = npoints
         self.split = split
-        self.data_filename = os.path.join(self.root, 'scannet_%s.pickle' % (split))
-        # with open(self.data_filename, 'rb') as fp:
-        #     self.scene_points_list = pickle.load(fp)
-        #     self.semantic_labels_list = pickle.load(fp)
+        self.darasetname = datasetname
+        self.data_filename = os.path.join(self.root, '%s_%s.pickle' % (datasetname, split))
         try:
             with open(self.data_filename, 'rb') as fp:
                 self.scene_points_list = pickle.load(fp)
@@ -25,15 +29,18 @@ class Dataset():
                 self.scene_points_list = pickle.load(fp, encoding='latin1')
                 self.semantic_labels_list = pickle.load(fp, encoding='latin1')
         if split == 'train':
-            labelweights = np.zeros(21)
+            # labelweights = np.zeros(21)
+            labelweights = np.zeros(num_classes)
             for seg in self.semantic_labels_list:
-                tmp, _ = np.histogram(seg, range(22))
+                # tmp, _ = np.histogram(seg, range(22))
+                tmp, _ = np.histogram(seg, range(num_classes + 1))
                 labelweights += tmp
             labelweights = labelweights.astype(np.float32)
             labelweights = labelweights / np.sum(labelweights)
             self.labelweights = 1 / np.log(1.2 + labelweights)
         elif split == 'test':
-            self.labelweights = np.ones(21)
+            # self.labelweights = np.ones(21)
+            self.labelweights = np.ones(num_classes)
 
     def __getitem__(self, index):
         point_set = self.scene_points_list[index]
@@ -75,12 +82,14 @@ class Dataset():
         return len(self.scene_points_list)
 
 
-class ScannetDatasetWholeScene():
-    def __init__(self, root, npoints=8192, split='train'):
-        self.npoints = npoints
+class DatasetWholeScene():
+    def __init__(self, root, num_classes=21, npoints=8192, split='train', datasetname='scannet'):
         self.root = root
+        self.num_classes = num_classes
+        self.npoints = npoints
         self.split = split
-        self.data_filename = os.path.join(self.root, 'scannet_%s.pickle' % (split))
+        self.darasetname = datasetname
+        self.data_filename = os.path.join(self.root, '%s_%s.pickle' % (datasetname, split))
         # with open(self.data_filename, 'rb') as fp:
         #     self.scene_points_list = pickle.load(fp)
         #     self.semantic_labels_list = pickle.load(fp)
@@ -94,15 +103,18 @@ class ScannetDatasetWholeScene():
                 self.scene_points_list = pickle.load(fp, encoding='latin1')
                 self.semantic_labels_list = pickle.load(fp, encoding='latin1')
         if split == 'train':
-            labelweights = np.zeros(21)
+            # labelweights = np.zeros(21)
+            labelweights = np.zeros(num_classes)
             for seg in self.semantic_labels_list:
-                tmp, _ = np.histogram(seg, range(22))
+                # tmp, _ = np.histogram(seg, range(22))
+                tmp, _ = np.histogram(seg, range(num_classes + 1))
                 labelweights += tmp
             labelweights = labelweights.astype(np.float32)
             labelweights = labelweights / np.sum(labelweights)
             self.labelweights = 1 / np.log(1.2 + labelweights)
         elif split == 'test':
-            self.labelweights = np.ones(21)
+            # self.labelweights = np.ones(21)
+            self.labelweights = np.ones(num_classes)
 
     def __getitem__(self, index):
         point_set_ini = self.scene_points_list[index]
@@ -145,12 +157,14 @@ class ScannetDatasetWholeScene():
         return len(self.scene_points_list)
 
 
-class ScannetDatasetVirtualScan():
-    def __init__(self, root, npoints=8192, split='train'):
-        self.npoints = npoints
+class DatasetVirtualScan():
+    def __init__(self, root, num_classes=21, npoints=8192, split='train', datasetname='scannet'):
         self.root = root
+        self.num_classes = num_classes
+        self.npoints = npoints
         self.split = split
-        self.data_filename = os.path.join(self.root, 'scannet_%s.pickle' % (split))
+        self.darasetname = datasetname
+        self.data_filename = os.path.join(self.root, '%s_%s.pickle' % (datasetname, split))
         # with open(self.data_filename, 'rb') as fp:
         #     self.scene_points_list = pickle.load(fp)
         #     self.semantic_labels_list = pickle.load(fp)
@@ -164,15 +178,18 @@ class ScannetDatasetVirtualScan():
                 self.scene_points_list = pickle.load(fp, encoding='latin1')
                 self.semantic_labels_list = pickle.load(fp, encoding='latin1')
         if split == 'train':
-            labelweights = np.zeros(21)
+            # labelweights = np.zeros(21)
+            labelweights = np.zeros(num_classes)
             for seg in self.semantic_labels_list:
-                tmp, _ = np.histogram(seg, range(22))
+                # tmp, _ = np.histogram(seg, range(22))
+                tmp, _ = np.histogram(seg, range(num_classes + 1))
                 labelweights += tmp
             labelweights = labelweights.astype(np.float32)
             labelweights = labelweights / np.sum(labelweights)
             self.labelweights = 1 / np.log(1.2 + labelweights)
         elif split == 'test':
-            self.labelweights = np.ones(21)
+            # self.labelweights = np.ones(21)
+            self.labelweights = np.ones(num_classes)
 
     def __getitem__(self, index):
         point_set_ini = self.scene_points_list[index]
@@ -205,7 +222,8 @@ class ScannetDatasetVirtualScan():
 
 
 if __name__ == '__main__':
-    d = ScannetDatasetWholeScene(root='./data', split='test', npoints=8192)
+    # d = ScannetDatasetWholeScene(root='./data', split='test', npoints=8192)
+    d = DatasetWholeScene(root='./data', num_classes=21, split='test', npoints=8192, datasetname='scannet')
     labelweights_vox = np.zeros(21)
     for ii in range(len(d)):
         print(ii)

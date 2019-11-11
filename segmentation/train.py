@@ -86,9 +86,19 @@ if not os.path.exists(DATA_PATH):
 
 NUM_CLASSES = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 
-TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
-TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
-TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
+# TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
+# TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
+# TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
+
+# root, num_classes=21, npoints=8192, split='train', datasetname='scannet'
+TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT,
+                                               split='train', datasetname=DATASET)
+TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='test',
+                                              datasetname=DATASET)
+TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, num_classes=NUM_CLASSES,
+                                                                    npoints=NUM_POINT, split='test',
+                                                                    datasetname=DATASET)
+
 
 # if DATASET == 'scannet':
 #     NUM_CLASSES = 21
