@@ -155,6 +155,7 @@ def get_bn_decay(batch):
 
 
 def train():
+    global EPOCH_CNT
     with tf.Graph().as_default():
         with tf.device('/gpu:' + str(GPU_INDEX)):
             pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT)
@@ -225,6 +226,7 @@ def train():
 
             train_one_epoch(sess, ops, train_writer)
             if epoch == 1 or epoch % 5 == 0:
+                EPOCH_CNT = epoch
                 acc = eval_one_epoch(sess, ops, test_writer)
                 acc = eval_whole_scene_one_epoch(sess, ops, test_writer)
             if acc > best_acc:
@@ -315,7 +317,7 @@ def train_one_epoch(sess, ops, train_writer):
 # evaluate on randomly chopped scenes
 def eval_one_epoch(sess, ops, test_writer):
     """ ops: dict mapping from string to tf ops """
-    global EPOCH_CNT
+    # global EPOCH_CNT
     is_training = False
     test_idxs = np.arange(0, len(TEST_DATASET))
     num_batches = len(TEST_DATASET) // BATCH_SIZE
@@ -411,7 +413,7 @@ def eval_one_epoch(sess, ops, test_writer):
 # evaluate on whole scenes to generate numbers provided in the paper
 def eval_whole_scene_one_epoch(sess, ops, test_writer):
     """ ops: dict mapping from string to tf ops """
-    global EPOCH_CNT
+    # global EPOCH_CNT
     is_training = False
     test_idxs = np.arange(0, len(TEST_DATASET_WHOLE_SCENE))
     num_batches = len(TEST_DATASET_WHOLE_SCENE)
@@ -530,7 +532,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
         per_class_str += 'class %d weight: %f, acc: %f; ' % (
             l, labelweights_vox[l - 1], total_correct_class_vox[l] / float(total_seen_class_vox[l]))
     log_string(per_class_str)
-    EPOCH_CNT += 1
+    # EPOCH_CNT += 1
     # return caliacc
     return total_correct / float(total_seen)
 
