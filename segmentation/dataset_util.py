@@ -12,14 +12,21 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
         test_file = os.path.join(DATA_PATH, 'scannet_test.pickle')
         if not (os.path.exists(train_file) and os.path.exists(test_file)):
             if not os.path.exists(os.path.join(DATA_PATH, zipfile)):
-                if DOWNLOADER == 'wget':
-                    os.system('wget %s' % www)
-                elif DOWNLOADER == 'aria2':
-                    os.system('aria2c -x 15 -s 15 %s' % www)
-                os.system('mv %s %s' % (zipfile, DATA_PATH))
-        # if not os.path.exists(os.path.join(DATA_PATH, 'scannet_train.pickle')):
+                cmd = 'wget %s' % www
+                if DOWNLOADER == 'aria2':
+                    # os.system('aria2c -x 15 -s 15 %s' % www)
+                    cmd = 'aria2c -x 15 -s 15 %s' % www
+                print(cmd)
+                os.system(cmd)
+                cmd = 'mv %s %s' % (zipfile, DATA_PATH)
+                # print(cmd)
+                os.system(cmd)
+            # if not os.path.exists(os.path.join(DATA_PATH, 'scannet_train.pickle')):
             unzipfile = os.path.join(DATA_PATH, zipfile)
-            os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
+            # os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
+            cmd = 'unzip -q %s -d %s' % (unzipfile, DATA_PATH)
+            print(cmd)
+            os.system(cmd)
             os.system('mv %s/* %s' % (os.path.join(DATA_PATH, 'data'), DATA_PATH))
             os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
     elif DATASET == 'kitti':
@@ -33,13 +40,17 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
         for www in www_list:
             zipfile = os.path.basename(www)
             if not os.path.exists(os.path.join(DATA_PATH, zipfile)):
-                if DOWNLOADER == 'wget':
-                    os.system('wget %s' % www)
-                elif DOWNLOADER == 'aria2':
-                    os.system('aria2c -x 15 -s 15 %s' % www)
+                cmd = 'wget %s' % www
+                if DOWNLOADER == 'aria2':
+                    # os.system('aria2c -x 15 -s 15 %s' % www)
+                    cmd = 'aria2c -x 15 -s 15 %s' % www
+                print(cmd)
+                os.system(cmd)
                 os.system('mv %s %s' % (zipfile, DATA_PATH))
                 unzipfile = os.path.join(DATA_PATH, zipfile)
-                os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
+                cmd = 'unzip -q %s -d %s' % (unzipfile, DATA_PATH)
+                print(cmd)
+                os.system(cmd)
 
         kitti_util.main()
 
