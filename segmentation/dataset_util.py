@@ -57,7 +57,7 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
                 os.system(cmd)
 
         kitti_util.main()
-
+    print('DATASET', DATASET, 'DATA_PATH', DATA_PATH, 'NUM_CLASSES', NUM_CLASSES)
     return NUM_CLASSES
 
 

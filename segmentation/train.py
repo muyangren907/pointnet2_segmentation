@@ -92,6 +92,9 @@ NUM_CLASSES = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 # TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
 
 # root, num_classes=21, npoints=8192, split='train', datasetname='scannet'
+
+
+
 TRAIN_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='train',
                                 datasetname=DATASET)
 TEST_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='test',
