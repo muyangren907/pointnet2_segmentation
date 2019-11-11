@@ -44,7 +44,7 @@ parser.add_argument('--dataset', type=str, default='scannet',
 parser.add_argument('--downloader', type=str, default='wget', help='Downloader for download dataset')
 FLAGS = parser.parse_args()
 
-EPOCH_CNT = 0
+EPOCH_CNT = 1
 
 BATCH_SIZE = FLAGS.batch_size
 NUM_POINT = FLAGS.num_point
@@ -404,7 +404,7 @@ def eval_one_epoch(sess, ops, test_writer):
         per_class_str += 'class %d weight: %f, acc: %f; ' % (
             l, labelweights_vox[l - 1], total_correct_class[l] / float(total_seen_class[l]))
     log_string(per_class_str)
-    EPOCH_CNT += 1
+    # EPOCH_CNT += 1
     return total_correct / float(total_seen)
 
 
