@@ -351,6 +351,8 @@ def dealdata2pickle(file_num):
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
+            del points_o_list[:]
+            del labelslist[:]
             points_o_list = []
             labelslist = []
             # print('clear list succeed!')
@@ -360,6 +362,8 @@ def dealdata2pickle(file_num):
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
+            del points_o_list[:]
+            del labelslist[:]
             points_o_list = []
             labelslist = []
             # print('clear list succeed!')
