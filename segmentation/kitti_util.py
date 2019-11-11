@@ -10,7 +10,7 @@ import psutil
 import gc
 
 
-# file_num = 0
+file_num = 0
 
 
 def get_memory_info():
@@ -362,7 +362,8 @@ def dealdata2pickle(spos, epos, file_num):
             # labelslist = []
             # gc.collect()
             # print('clear list succeed!')
-        if data_id + 1 == file_num:
+        # if data_id + 1 == file_num:
+        if data_id + 1 == 2000:
             save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_test.pickle')
             with open(save_object_pickle_file, 'wb') as pf:
                 pickle.dump(points_o_list, pf)
