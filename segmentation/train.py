@@ -20,6 +20,8 @@ import provider
 import tf_util
 import pc_util
 
+import dataset_util
+
 sys.path.append(os.path.join(ROOT_DIR, 'data_prep'))
 import scannet_dataset
 
@@ -36,8 +38,8 @@ parser.add_argument('--optimizer', type=str, default='adam', help='adam or momen
 parser.add_argument('--decay_step', type=int, default=200000, help='Decay step for lr decay [default: 200000]')
 parser.add_argument('--decay_rate', type=float, default=0.7, help='Decay rate for lr decay [default: 0.7]')
 # add data directory parser
-parser.add_argument('--data_dir', type=str, default='scannet_data_pointnet2',
-                    help='Data directory for data/ [default: scannet_data_pointnet2]')
+parser.add_argument('--dataset', type=str, default='scannet',
+                    help='Dataset name [default: scannet]')
 parser.add_argument('--downloader', type=str, default='wget', help='Downloader for download dataset')
 FLAGS = parser.parse_args()
 
@@ -53,7 +55,7 @@ OPTIMIZER = FLAGS.optimizer
 DECAY_STEP = FLAGS.decay_step
 DECAY_RATE = FLAGS.decay_rate
 # add data directory parser
-DATA_DIR = FLAGS.data_dir
+DATASET = FLAGS.dataset
 DOWNLOADER = FLAGS.downloader
 
 MODEL = importlib.import_module(FLAGS.model)  # import network module
@@ -74,35 +76,42 @@ BN_DECAY_CLIP = 0.99
 HOSTNAME = socket.gethostname()
 
 # NUM_CLASSES = 21
-NUM_CLASSES = 5
+# NUM_CLASSES = 5
 
 # Shapenet official train/test split
 # DATA_PATH = os.path.join(ROOT_DIR, 'data', 'scannet_data_pointnet2')
-DATA_PATH = os.path.join(ROOT_DIR, 'data', DATA_DIR)
+DATA_PATH = os.path.join(ROOT_DIR, 'data', DATASET)
 if not os.path.exists(DATA_PATH):
     os.makedirs(DATA_PATH)
-if DATA_DIR == 'scannet_data_pointnet2':
-    NUM_CLASSES = 21
-    www = 'https://shapenet.cs.stanford.edu/media/scannet_data_pointnet2.zip'
-    zipfile = os.path.basename(www)
-    if not os.path.exists(os.path.join(DATA_PATH, 'scannet_data_pointnet2.zip')):
-        if DOWNLOADER == 'wget':
-            os.system('wget %s' % www)
-        elif DOWNLOADER == 'aria2':
-            os.system('aria2c -x 15 -s 15 %s' % www)
-        os.system('mv %s %s' % (zipfile, DATA_PATH))
-    if not os.path.exists(os.path.join(DATA_PATH, 'scannet_train.pickle')):
-        unzipfile = os.path.join(DATA_PATH, zipfile)
-        os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
-        os.system('mv %s/* %s' % (os.path.join(DATA_PATH, 'data'), DATA_PATH))
-        os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
-        # os.system('rm %s' % unzipfile)
-        # path_old = os.path.join(ROOT_DIR, 'data', 'data')
-        # path_new = os.path.join(ROOT_DIR, 'data', 'scannet_data_pointnet2')
-        # os.system('mv %s %s' % (path_old, path_new))
-    TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
-    TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
-    TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
+
+NUM_CLASSES = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
+
+TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
+TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
+TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
+
+# if DATASET == 'scannet':
+#     NUM_CLASSES = 21
+#     www = 'https://shapenet.cs.stanford.edu/media/scannet_data_pointnet2.zip'
+#     zipfile = os.path.basename(www)
+#     if not os.path.exists(os.path.join(DATA_PATH, 'scannet_data_pointnet2.zip')):
+#         if DOWNLOADER == 'wget':
+#             os.system('wget %s' % www)
+#         elif DOWNLOADER == 'aria2':
+#             os.system('aria2c -x 15 -s 15 %s' % www)
+#         os.system('mv %s %s' % (zipfile, DATA_PATH))
+#     if not os.path.exists(os.path.join(DATA_PATH, 'scannet_train.pickle')):
+#         unzipfile = os.path.join(DATA_PATH, zipfile)
+#         os.system('unzip -q %s -d %s' % (unzipfile, DATA_PATH))
+#         os.system('mv %s/* %s' % (os.path.join(DATA_PATH, 'data'), DATA_PATH))
+#         os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
+#         # os.system('rm %s' % unzipfile)
+#         # path_old = os.path.join(ROOT_DIR, 'data', 'data')
+#         # path_new = os.path.join(ROOT_DIR, 'data', 'scannet_data_pointnet2')
+#         # os.system('mv %s %s' % (path_old, path_new))
+#     TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
+#     TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
+#     TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
 
 
 def log_string(out_str):

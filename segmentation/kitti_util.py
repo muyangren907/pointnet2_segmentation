@@ -10,22 +10,22 @@ import pickle
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
-if not os.path.exists(DATA_DIR):
-    os.makedirs(DATA_DIR)
-
-www_list = [
-    'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip',
-    'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip',
-    'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_velodyne.zip',
-]
-for www in www_list:
-    zipfile = os.path.basename(www)
-    if not os.path.exists(os.path.join(DATA_DIR, 'training', zipfile[:-4].replace('data_object_', ''))):
-        os.system('wget %s' % www)
-        os.system('mv %s %s' % (zipfile, DATA_DIR))
-        unzipfile = os.path.join(DATA_DIR, zipfile)
-        os.system('unzip -q %s -d %s' % (unzipfile, DATA_DIR))
-        os.system('rm %s' % unzipfile)
+# if not os.path.exists(DATA_DIR):
+#     os.makedirs(DATA_DIR)
+#
+# www_list = [
+#     'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip',
+#     'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip',
+#     'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_velodyne.zip',
+# ]
+# for www in www_list:
+#     zipfile = os.path.basename(www)
+#     if not os.path.exists(os.path.join(DATA_DIR, 'training', zipfile[:-4].replace('data_object_', ''))):
+#         os.system('wget %s' % www)
+#         os.system('mv %s %s' % (zipfile, DATA_DIR))
+#         unzipfile = os.path.join(DATA_DIR, zipfile)
+#         os.system('unzip -q %s -d %s' % (unzipfile, DATA_DIR))
+#         os.system('rm %s' % unzipfile)
 
 
 class Calibration(object):
@@ -354,10 +354,17 @@ def dealdata2pickle(file_num):
 def getfilenum(path):
     return len(os.listdir(path))
 
+def main(DATA_PATH):
+    # file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
+    DATA_DIR = DATA_PATH
+    file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
+    file_num = getfilenum(file_num_path)
+    dealdata2pickle(file_num)
 
 if __name__ == '__main__':
     # typelist = {b'Pedestrian': 4487, b'Truck': 1094, b'Car': 28742, b'Cyclist': 1627, b'DontCare': 11295, b'Misc': 973,
     #             b'Van': 2914, b'Tram': 511, b'Person_sitting': 222}
-    file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
-    file_num = getfilenum(file_num_path)
-    dealdata2pickle(file_num)
+    # file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
+    # file_num = getfilenum(file_num_path)
+    # dealdata2pickle(file_num)
+    main()
