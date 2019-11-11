@@ -243,6 +243,7 @@ def inverse_rigid_trans(Tr):
 def dealdata2pickle(file_num):
     points_o_list, labelslist = [], []
 
+    # save_object_pickle_path = os.path.join(DATA_DIR, 'kitti')
     save_object_pickle_path = os.path.join(DATA_DIR, 'kitti')
 
     if not os.path.exists(save_object_pickle_path):
