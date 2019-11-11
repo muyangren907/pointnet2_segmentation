@@ -23,6 +23,7 @@ import pc_util
 import dataset_util
 
 sys.path.append(os.path.join(ROOT_DIR, 'data_prep'))
+import dataset
 import scannet_dataset
 
 parser = argparse.ArgumentParser()
@@ -91,13 +92,12 @@ NUM_CLASSES = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 # TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
 
 # root, num_classes=21, npoints=8192, split='train', datasetname='scannet'
-TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT,
-                                               split='train', datasetname=DATASET)
-TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='test',
-                                              datasetname=DATASET)
-TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, num_classes=NUM_CLASSES,
-                                                                    npoints=NUM_POINT, split='test',
-                                                                    datasetname=DATASET)
+TRAIN_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='train',
+                                datasetname=DATASET)
+TEST_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='test',
+                               datasetname=DATASET)
+TEST_DATASET_WHOLE_SCENE = dataset.DatasetWholeScene(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT,
+                                                     split='test', datasetname=DATASET)
 
 
 # if DATASET == 'scannet':
