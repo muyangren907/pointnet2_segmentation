@@ -33,37 +33,39 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
             os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
     elif DATASET == 'kitti':
         NUM_CLASSES = 5
-
-        www_list = [
-            'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip',
-            'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip',
-            'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_velodyne.zip',
-        ]
-        for www in www_list:
-            zipfile = os.path.basename(www)
-            if not os.path.exists(os.path.join(DATA_PATH, zipfile)):
-                cmd = 'wget %s' % www
-                if DOWNLOADER == 'aria2':
-                    # os.system('aria2c -x 15 -s 15 %s' % www)
-                    cmd = 'aria2c -x 15 -s 15 %s' % www
-                elif DOWNLOADER == 'axel':
-                    cmd = 'axel -n 64 %s' % www
-                print(cmd)
-                os.system(cmd)
-                os.system('mv %s %s' % (zipfile, DATA_PATH))
-                unzipfile = os.path.join(DATA_PATH, zipfile)
-                cmd = 'unzip -q %s -d %s' % (unzipfile, DATA_PATH)
-                print(cmd)
-                os.system(cmd)
-        # file_num_path = os.path.join(DATA_PATH, 'training', 'velodyne')
-        # file_num = len(os.listdir(file_num_path))
-        kitti_util.main()
-        # for i in range(0, file_num, 1000):
-        #     # gc.collect()
-        #     if i + 1000 < file_num:
-        #         kitti_util.dealdata2pickle(i, i + 1000,file_num)
-        #     else:
-        #         kitti_util.dealdata2pickle(i, file_num,file_num)
+        train_file = os.path.join(DATA_PATH, 'kitti_train.pickle')
+        test_file = os.path.join(DATA_PATH, 'kitti_test.pickle')
+        if not (os.path.exists(train_file) and os.path.exists(test_file)):
+            www_list = [
+                'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_label_2.zip',
+                'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_calib.zip',
+                'https://s3.eu-central-1.amazonaws.com/avg-kitti/data_object_velodyne.zip',
+            ]
+            for www in www_list:
+                zipfile = os.path.basename(www)
+                if not os.path.exists(os.path.join(DATA_PATH, zipfile)):
+                    cmd = 'wget %s' % www
+                    if DOWNLOADER == 'aria2':
+                        # os.system('aria2c -x 15 -s 15 %s' % www)
+                        cmd = 'aria2c -x 15 -s 15 %s' % www
+                    elif DOWNLOADER == 'axel':
+                        cmd = 'axel -n 64 %s' % www
+                    print(cmd)
+                    os.system(cmd)
+                    os.system('mv %s %s' % (zipfile, DATA_PATH))
+                    unzipfile = os.path.join(DATA_PATH, zipfile)
+                    cmd = 'unzip -q %s -d %s' % (unzipfile, DATA_PATH)
+                    print(cmd)
+                    os.system(cmd)
+            # file_num_path = os.path.join(DATA_PATH, 'training', 'velodyne')
+            # file_num = len(os.listdir(file_num_path))
+            kitti_util.main()
+            # for i in range(0, file_num, 1000):
+            #     # gc.collect()
+            #     if i + 1000 < file_num:
+            #         kitti_util.dealdata2pickle(i, i + 1000,file_num)
+            #     else:
+            #         kitti_util.dealdata2pickle(i, file_num,file_num)
     print('DATASET:', DATASET, '\nDATA_PATH:', DATA_PATH, '\nNUM_CLASSES:', NUM_CLASSES)
     return NUM_CLASSES
 
