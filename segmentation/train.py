@@ -94,7 +94,6 @@ NUM_CLASSES = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 # root, num_classes=21, npoints=8192, split='train', datasetname='scannet'
 
 
-
 TRAIN_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='train',
                                 datasetname=DATASET)
 TEST_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='test',
@@ -359,7 +358,8 @@ def eval_one_epoch(sess, ops, test_writer):
         total_correct += correct
         total_seen += np.sum((batch_label > 0) & (batch_smpw > 0))
         loss_sum += loss_val
-        tmp, _ = np.histogram(batch_label, range(22))
+        # tmp, _ = np.histogram(batch_label, range(22))
+        tmp, _ = np.histogram(batch_label, range(NUM_CLASSES+1))
         labelweights += tmp
         for l in range(NUM_CLASSES):
             total_seen_class[l] += np.sum((batch_label == l) & (batch_smpw > 0))
@@ -378,7 +378,8 @@ def eval_one_epoch(sess, ops, test_writer):
                                                                                   res=0.02)
             total_correct_vox += np.sum((uvlabel[:, 0] == uvlabel[:, 1]) & (uvlabel[:, 0] > 0))
             total_seen_vox += np.sum(uvlabel[:, 0] > 0)
-            tmp, _ = np.histogram(uvlabel[:, 0], range(22))
+            # tmp, _ = np.histogram(uvlabel[:, 0], range(22))
+            tmp, _ = np.histogram(uvlabel[:, 0], range(NUM_CLASSES+1))
             labelweights_vox += tmp
             for l in range(NUM_CLASSES):
                 total_seen_class_vox[l] += np.sum(uvlabel[:, 0] == l)
@@ -480,7 +481,8 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
         total_correct += correct
         total_seen += np.sum((batch_label > 0) & (batch_smpw > 0))
         loss_sum += loss_val
-        tmp, _ = np.histogram(batch_label, range(22))
+        # tmp, _ = np.histogram(batch_label, range(22))
+        tmp, _ = np.histogram(batch_label, range(NUM_CLASSES + 1))
         labelweights += tmp
         for l in range(NUM_CLASSES):
             total_seen_class[l] += np.sum((batch_label == l) & (batch_smpw > 0))
@@ -499,7 +501,8 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
                                                                                   res=0.02)
             total_correct_vox += np.sum((uvlabel[:, 0] == uvlabel[:, 1]) & (uvlabel[:, 0] > 0))
             total_seen_vox += np.sum(uvlabel[:, 0] > 0)
-            tmp, _ = np.histogram(uvlabel[:, 0], range(22))
+            # tmp, _ = np.histogram(uvlabel[:, 0], range(22))
+            tmp, _ = np.histogram(uvlabel[:, 0], range(NUM_CLASSES+1))
             labelweights_vox += tmp
             for l in range(NUM_CLASSES):
                 total_seen_class_vox[l] += np.sum(uvlabel[:, 0] == l)
