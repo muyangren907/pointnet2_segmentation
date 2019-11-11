@@ -219,7 +219,7 @@ def train():
                'end_points': end_points}
 
         best_acc = -1
-        for epoch in range(MAX_EPOCH):
+        for epoch in range(1, MAX_EPOCH + 1):
             log_string('**** EPOCH %03d ****' % (epoch))
             sys.stdout.flush()
 
@@ -359,7 +359,7 @@ def eval_one_epoch(sess, ops, test_writer):
         total_seen += np.sum((batch_label > 0) & (batch_smpw > 0))
         loss_sum += loss_val
         # tmp, _ = np.histogram(batch_label, range(22))
-        tmp, _ = np.histogram(batch_label, range(NUM_CLASSES+1))
+        tmp, _ = np.histogram(batch_label, range(NUM_CLASSES + 1))
         labelweights += tmp
         for l in range(NUM_CLASSES):
             total_seen_class[l] += np.sum((batch_label == l) & (batch_smpw > 0))
@@ -379,7 +379,7 @@ def eval_one_epoch(sess, ops, test_writer):
             total_correct_vox += np.sum((uvlabel[:, 0] == uvlabel[:, 1]) & (uvlabel[:, 0] > 0))
             total_seen_vox += np.sum(uvlabel[:, 0] > 0)
             # tmp, _ = np.histogram(uvlabel[:, 0], range(22))
-            tmp, _ = np.histogram(uvlabel[:, 0], range(NUM_CLASSES+1))
+            tmp, _ = np.histogram(uvlabel[:, 0], range(NUM_CLASSES + 1))
             labelweights_vox += tmp
             for l in range(NUM_CLASSES):
                 total_seen_class_vox[l] += np.sum(uvlabel[:, 0] == l)
@@ -502,7 +502,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
             total_correct_vox += np.sum((uvlabel[:, 0] == uvlabel[:, 1]) & (uvlabel[:, 0] > 0))
             total_seen_vox += np.sum(uvlabel[:, 0] > 0)
             # tmp, _ = np.histogram(uvlabel[:, 0], range(22))
-            tmp, _ = np.histogram(uvlabel[:, 0], range(NUM_CLASSES+1))
+            tmp, _ = np.histogram(uvlabel[:, 0], range(NUM_CLASSES + 1))
             labelweights_vox += tmp
             for l in range(NUM_CLASSES):
                 total_seen_class_vox[l] += np.sum(uvlabel[:, 0] == l)
