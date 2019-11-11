@@ -9,6 +9,8 @@ import pickle
 import psutil
 import gc
 
+file_num = 0
+
 
 def get_memory_info():
     virtual_memory = psutil.virtual_memory()
@@ -253,7 +255,7 @@ def inverse_rigid_trans(Tr):
     return inv_Tr
 
 
-def dealdata2pickle(file_num):
+def dealdata2pickle(spos, epos):
     points_o_list, labelslist = [], []
 
     # save_object_pickle_path = os.path.join(DATA_DIR, 'kitti')
@@ -266,8 +268,8 @@ def dealdata2pickle(file_num):
     label_path = os.path.join(DATA_DIR, 'training', 'label_2')
     calib_path = os.path.join(DATA_DIR, 'training', 'calib')
 
-    for data_id in range(file_num):
-
+    # for data_id in range(file_num):
+    for data_id in range(spos, epos):
         lidar_file = os.path.join(lidar_path, '%06d.bin' % data_id)
         label_file = os.path.join(label_path, '%06d.txt' % data_id)
         calib_file = os.path.join(calib_path, '%06d.txt' % data_id)
@@ -339,7 +341,7 @@ def dealdata2pickle(file_num):
         points_o, labels = points[:, :-1], points[:, -1:].reshape(points_shape[0], )
         # points_o_list.append(points_o)
         # labelslist.append(labels)
-        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, len(labelslist), get_memory_info(),
+        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, get_memory_info(),
               end='\r')
 
         if (data_id + 1) % 1000 == 0:
@@ -353,11 +355,11 @@ def dealdata2pickle(file_num):
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
-            del points_o_list[:]
-            del labelslist[:]
-            points_o_list = []
-            labelslist = []
-            gc.collect()
+            # del points_o_list[:]
+            # del labelslist[:]
+            # points_o_list = []
+            # labelslist = []
+            # gc.collect()
             # print('clear list succeed!')
         if data_id + 1 == file_num:
             save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_test.pickle')
@@ -365,11 +367,11 @@ def dealdata2pickle(file_num):
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
-            del points_o_list[:]
-            del labelslist[:]
-            points_o_list = []
-            labelslist = []
-            gc.collect()
+            # del points_o_list[:]
+            # del labelslist[:]
+            # points_o_list = []
+            # labelslist = []
+            # gc.collect()
             # print('clear list succeed!')
 
 
@@ -382,9 +384,15 @@ def main():
     # file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
     # global DATA_DIR
     # DATA_DIR = DATA_PATH
+    global file_num
     file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
     file_num = getfilenum(file_num_path)
-    dealdata2pickle(file_num)
+    for i in range(0, file_num, 1000):
+        if i + 1000 < file_num:
+            dealdata2pickle(i, i + 1000)
+        else:
+            dealdata2pickle(i, file_num)
+    # dealdata2pickle(file_num)
 
 
 if __name__ == '__main__':
