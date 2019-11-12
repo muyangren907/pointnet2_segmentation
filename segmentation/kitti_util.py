@@ -357,12 +357,14 @@ def dealdata2pickle(spos, epos, file_num):
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
+            return
         if data_id + 1 == 1400:
             save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_test.pickle')
             with open(save_object_pickle_file, 'wb') as pf:
                 pickle.dump(points_o_list, pf)
                 pickle.dump(labelslist, pf)
             print('save', save_object_pickle_file, 'succeed!')
+            return
 
 
 # 获取文件夹下文件个数
