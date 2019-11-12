@@ -281,10 +281,10 @@ def dealdata2pickle(spos, epos, file_num):
         # 获取points的shape
         points_shape = points.shape
         # zeros = np.zeros(points_shape[0])
-        fours = np.ones(points_shape[0]) * 4
+        threees = np.ones(points_shape[0]) * 3
         # 扩充一列，用于记录标签id
         # points = np.c_[points, zeros]
-        points = np.c_[points, fours]
+        points = np.c_[points, threees]
         # points[:, 3] = 1
         # print(points)
 
@@ -304,7 +304,8 @@ def dealdata2pickle(spos, epos, file_num):
         for label in lables:
             i += 1
             # Misc和DontCare
-            if label['type'] != b'DontCare':
+            # if label['type'] != b'DontCare':
+            if label['type'] not in [b'Misc', b'DontCare']:
                 # 将图像坐标转换为激光点云坐标
                 xyz = calibs.project_rect_to_velo(np.array([[label['x'], label['y'], label['z']]]))
 
@@ -335,8 +336,8 @@ def dealdata2pickle(spos, epos, file_num):
                     labelid = 1
                 elif label['type'] in [b'Cyclist']:
                     labelid = 2
-                elif label['type'] in [b'Misc']:
-                    labelid = 3
+                # elif label['type'] in [b'Misc']:
+                #     labelid = 3
 
                 points[filt, 3] = labelid
 

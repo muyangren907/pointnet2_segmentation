@@ -228,7 +228,7 @@ def train():
             if epoch % 5 == 0:
                 EPOCH_CNT = epoch
                 acc = eval_one_epoch(sess, ops, test_writer)
-                acc = eval_whole_scene_one_epoch(sess, ops, test_writer)
+                # acc = eval_whole_scene_one_epoch(sess, ops, test_writer)
             if acc > best_acc:
                 best_acc = acc
                 save_path = saver.save(sess, os.path.join(LOG_DIR, "best_model_epoch_%03d.ckpt" % (epoch)))
@@ -401,10 +401,10 @@ def eval_one_epoch(sess, ops, test_writer):
     # log_string('eval point calibrated average acc: %f' % (
     #     np.average(np.array(total_correct_class[1:]) / (np.array(total_seen_class[1:], dtype=np.float) + 1e-6),
     #                weights=caliweights)))
-    per_class_str = 'vox based --------'
+    per_class_str = 'vox based --------\n'
     for l in range(1, NUM_CLASSES):
-        per_class_str += 'class %d weight: %f, acc: %f; ' % (
-            l, labelweights_vox[l - 1], total_correct_class[l] / float(total_seen_class[l]))
+        per_class_str += 'class %d weight: %f, acc: %f \n' % (
+            l, labelweights_vox[l - 1], total_correct_class[l] / (float(total_seen_class[l]) + 1e-6))
     log_string(per_class_str)
     # EPOCH_CNT += 1
     return total_correct / float(total_seen)
@@ -527,10 +527,10 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
     #     weights=caliweights)
     # log_string('eval whole scene point calibrated average acc vox: %f' % caliacc)
 
-    per_class_str = 'vox based --------'
+    per_class_str = 'vox based --------\n'
     for l in range(1, NUM_CLASSES):
-        per_class_str += 'class %d weight: %f, acc: %f; ' % (
-            l, labelweights_vox[l - 1], total_correct_class_vox[l] / float(total_seen_class_vox[l]))
+        per_class_str += 'class %d weight: %f, acc: %f\n' % (
+            l, labelweights_vox[l - 1], total_correct_class_vox[l] / (float(total_seen_class_vox[l]) + 1e-6))
     log_string(per_class_str)
     # EPOCH_CNT += 1
     # return caliacc
