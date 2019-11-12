@@ -66,7 +66,9 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
             #         kitti_util.dealdata2pickle(i, i + 1000,file_num)
             #     else:
             #         kitti_util.dealdata2pickle(i, file_num,file_num)
-    print('*' * 6, '\n', 'DATASET:', DATASET, '\nDATA_PATH:', DATA_PATH, '\nNUM_CLASSES:', NUM_CLASSES, '\n', '*' * 6)
+    print('*' * 6)
+    print('DATASET:', DATASET, '\nDATA_PATH:', DATA_PATH, '\nNUM_CLASSES:', NUM_CLASSES)
+    print('*' * 6)
     return NUM_CLASSES
 
 
