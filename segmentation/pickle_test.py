@@ -6,7 +6,7 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
 
 if __name__ == '__main__':
-    data_filename = os.path.join(DATA_DIR, 'scannet_train.pickle')
+    data_filename = os.path.join(DATA_DIR, 'scannet', 'scannet_train.pickle')
 
     with open(data_filename, 'rb') as fp:
         scene_points_list = pickle.load(fp, encoding='latin1')
