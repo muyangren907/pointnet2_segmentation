@@ -8,7 +8,7 @@ parser.add_argument('--split', type=str, default='train', help='split')
 FLAGS = parser.parse_args()
 
 DATASET = FLAGS.data
-SPLIT = FLAGS.data
+SPLIT = FLAGS.split
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
