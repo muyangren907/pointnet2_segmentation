@@ -1,6 +1,7 @@
 import pickle
 import os
 import argparse
+import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--data', type=str, default='scannet', help='dataset')
@@ -15,7 +16,7 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
 
 if __name__ == '__main__':
-    data_filename = os.path.join(DATA_DIR, DATASET, '%s_%s.pickle' % (DATASET,SPLIT))
+    data_filename = os.path.join(DATA_DIR, DATASET, '%s_%s.pickle' % (DATASET, SPLIT))
 
     try:
         with open(data_filename, 'rb') as fp:
@@ -30,3 +31,10 @@ if __name__ == '__main__':
     print(scene_points_list[0].shape, semantic_labels_list[0].shape)
     print(scene_points_list[0])
     print(semantic_labels_list[0])
+
+    m, n = 999, -1
+
+    for label in semantic_labels_list:
+        a, b = np.max(label), np.min(label)
+        print(m, a, n, b)
+        m, n = max(a, m), min(b, n)
