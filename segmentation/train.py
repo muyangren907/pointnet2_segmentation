@@ -44,7 +44,7 @@ parser.add_argument('--dataset', type=str, default='scannet',
 parser.add_argument('--downloader', type=str, default='wget', help='Downloader for download dataset')
 FLAGS = parser.parse_args()
 
-EPOCH_CNT = 1
+EPOCH_CNT = 0
 
 BATCH_SIZE = FLAGS.batch_size
 NUM_POINT = FLAGS.num_point
@@ -220,12 +220,12 @@ def train():
                'end_points': end_points}
 
         best_acc = -1
-        for epoch in range(1, MAX_EPOCH + 1):
+        for epoch in range(MAX_EPOCH):
             log_string('**** EPOCH %03d ****' % (epoch))
             sys.stdout.flush()
 
             train_one_epoch(sess, ops, train_writer)
-            if epoch == 1 or epoch % 5 == 0:
+            if epoch % 5 == 0:
                 EPOCH_CNT = epoch
                 acc = eval_one_epoch(sess, ops, test_writer)
                 acc = eval_whole_scene_one_epoch(sess, ops, test_writer)
