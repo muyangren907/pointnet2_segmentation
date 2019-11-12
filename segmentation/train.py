@@ -228,7 +228,7 @@ def train():
             if epoch % 5 == 0:
                 EPOCH_CNT = epoch
                 acc = eval_one_epoch(sess, ops, test_writer)
-                # acc = eval_whole_scene_one_epoch(sess, ops, test_writer)
+                acc = eval_whole_scene_one_epoch(sess, ops, test_writer)
             if acc > best_acc:
                 best_acc = acc
                 save_path = saver.save(sess, os.path.join(LOG_DIR, "best_model_epoch_%03d.ckpt" % (epoch)))
