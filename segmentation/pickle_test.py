@@ -1,16 +1,31 @@
 import pickle
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--data', type=str, default='scannet', help='dataset')
+parser.add_argument('--split', type=str, default='train', help='split')
+FLAGS = parser.parse_args()
+
+DATASET = FLAGS.data
+SPLIT = FLAGS.data
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
 
 if __name__ == '__main__':
-    data_filename = os.path.join(DATA_DIR, 'scannet', 'scannet_train.pickle')
+    data_filename = os.path.join(DATA_DIR, DATASET, '%s_%s.pickle' % (DATASET,SPLIT))
 
-    with open(data_filename, 'rb') as fp:
-        scene_points_list = pickle.load(fp, encoding='latin1')
-        semantic_labels_list = pickle.load(fp, encoding='latin1')
+    try:
+        with open(data_filename, 'rb') as fp:
+            scene_points_list = pickle.load(fp)
+            semantic_labels_list = pickle.load(fp)
+    except Exception as e:
+        # print(e)
+        with open(data_filename, 'rb') as fp:
+            scene_points_list = pickle.load(fp, encoding='latin1')
+            semantic_labels_list = pickle.load(fp, encoding='latin1')
     print(len(scene_points_list), len(semantic_labels_list))
     print(scene_points_list[0].shape, semantic_labels_list[0].shape)
     print(scene_points_list[0])
