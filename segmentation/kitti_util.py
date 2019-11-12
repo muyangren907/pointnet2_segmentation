@@ -9,7 +9,6 @@ import pickle
 import psutil
 import gc
 
-
 file_num = 0
 
 
@@ -281,9 +280,11 @@ def dealdata2pickle(spos, epos, file_num):
         points = points[:, :-1]
         # 获取points的shape
         points_shape = points.shape
-        zeros = np.zeros(points_shape[0])
+        # zeros = np.zeros(points_shape[0])
+        fours = np.ones(points_shape[0]) * 4
         # 扩充一列，用于记录标签id
-        points = np.c_[points, zeros]
+        # points = np.c_[points, zeros]
+        points = np.c_[points, fours]
         # points[:, 3] = 1
         # print(points)
 
@@ -329,13 +330,13 @@ def dealdata2pickle(spos, epos, file_num):
                 labelid = 0
                 # 标签id定义
                 if label['type'] in [b'Pedestrian', b'Person_sitting']:
-                    labelid = 1
+                    labelid = 0
                 elif label['type'] in [b'Car', b'Van', b'Truck', b'Tram']:
-                    labelid = 2
+                    labelid = 1
                 elif label['type'] in [b'Cyclist']:
-                    labelid = 3
+                    labelid = 2
                 elif label['type'] in [b'Misc']:
-                    labelid = 4
+                    labelid = 3
 
                 points[filt, 3] = labelid
 
