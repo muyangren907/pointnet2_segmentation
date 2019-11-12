@@ -327,7 +327,7 @@ def dealdata2pickle(spos, epos, file_num):
                 filt = np.logical_and(x_filt, y_filt)  # 必须同时成立
                 filt = np.logical_and(filt, z_filt)  # 必须同时成立
 
-                labelid = 0
+                labelid = 4
                 # 标签id定义
                 if label['type'] in [b'Pedestrian', b'Person_sitting']:
                     labelid = 0
