@@ -321,6 +321,7 @@ def eval_one_epoch(sess, ops, test_writer):
     is_training = False
     test_idxs = np.arange(0, len(TEST_DATASET))
     num_batches = len(TEST_DATASET) // BATCH_SIZE
+    print('num_batches', num_batches)
 
     total_correct = 0
     total_seen = 0
@@ -417,6 +418,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
     is_training = False
     test_idxs = np.arange(0, len(TEST_DATASET_WHOLE_SCENE))
     num_batches = len(TEST_DATASET_WHOLE_SCENE)
+    print('num_batches', num_batches)
 
     total_correct = 0
     total_seen = 0
