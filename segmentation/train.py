@@ -353,7 +353,7 @@ def eval_one_epoch(sess, ops, test_writer):
                      ops['smpws_pl']: batch_smpw,
                      ops['is_training_pl']: is_training}
         # tmp print
-        print(batch_idx, feed_dict)
+        print(batch_idx)
         summary, step, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
                                                       ops['loss'], ops['pred']], feed_dict=feed_dict)
         test_writer.add_summary(summary, step)
@@ -479,7 +479,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
                      ops['smpws_pl']: batch_smpw,
                      ops['is_training_pl']: is_training}
         # tmp print
-        print(batch_idx, feed_dict)
+        print(batch_idx)
         summary, step, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
                                                       ops['loss'], ops['pred']], feed_dict=feed_dict)
         test_writer.add_summary(summary, step)
