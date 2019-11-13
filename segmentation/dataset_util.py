@@ -32,7 +32,7 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
             os.system('mv %s/* %s' % (os.path.join(DATA_PATH, 'data'), DATA_PATH))
             os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
     elif DATASET == 'kitti':
-        NUM_CLASSES = 4
+        NUM_CLASSES = 9
         train_file = os.path.join(DATA_PATH, 'kitti_train.pickle')
         test_file = os.path.join(DATA_PATH, 'kitti_test.pickle')
         if not (os.path.exists(train_file) and os.path.exists(test_file)):
