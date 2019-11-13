@@ -119,7 +119,9 @@ class DatasetWholeScene():
     def __getitem__(self, index):
         point_set_ini = self.scene_points_list[index]
         semantic_seg_ini = self.semantic_labels_list[index].astype(np.int32)
+        # 获取(x,y,z)每一项的最大值，不一定为同一个点
         coordmax = np.max(point_set_ini, axis=0)
+        # 获取(x,y,z)每一项的最小值，不一定为同一个点
         coordmin = np.min(point_set_ini, axis=0)
         nsubvolume_x = np.ceil((coordmax[0] - coordmin[0]) / 1.5).astype(np.int32)
         nsubvolume_y = np.ceil((coordmax[1] - coordmin[1]) / 1.5).astype(np.int32)
