@@ -45,6 +45,7 @@ if __name__ == '__main__':
     #     print(m, a, n, b)
     #     m, n = max(a, m), min(b, n)
     a = 'r'
+    label_count = np.zeros(NUM_CLASSES)
     for label in semantic_labels_list:
         # 统计0-21各有多少个
         """ 
@@ -53,9 +54,11 @@ if __name__ == '__main__':
         _
         [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21]
         """
-        tmp, _ = np.histogram(label, range(22))
-        print(tmp)
-        print(_)
-        a = input('continue')
-        if a == 'q':
-            break
+        tmp, _ = np.histogram(label, range(NUM_CLASSES))
+        label_count += tmp
+        # print(tmp)
+        # print(_)
+        # a = input('continue')
+        # if a == 'q':
+        #     break
+    print(label_count)
