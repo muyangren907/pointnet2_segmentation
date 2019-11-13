@@ -58,7 +58,7 @@ if __name__ == '__main__':
         label_count += tmp
         # print(tmp)
         # print(_)
-        # a = input('continue')
-        # if a == 'q':
-        #     break
+        a = input('continue')
+        if a == 'q':
+            break
     print(label_count)
