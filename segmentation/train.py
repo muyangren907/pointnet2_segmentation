@@ -446,6 +446,8 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
     extra_batch_label = np.zeros((0, NUM_POINT))
     extra_batch_smpw = np.zeros((0, NUM_POINT))
     for batch_idx in range(num_batches):
+        # tmp print
+        print(batch_idx)
         if not is_continue_batch:
             batch_data, batch_label, batch_smpw = TEST_DATASET_WHOLE_SCENE[batch_idx]
             batch_data = np.concatenate((batch_data, extra_batch_data), axis=0)
@@ -478,8 +480,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
                      ops['labels_pl']: batch_label,
                      ops['smpws_pl']: batch_smpw,
                      ops['is_training_pl']: is_training}
-        # tmp print
-        print(batch_idx)
+
         summary, step, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
                                                       ops['loss'], ops['pred']], feed_dict=feed_dict)
         test_writer.add_summary(summary, step)
@@ -515,7 +516,8 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
             for l in range(NUM_CLASSES):
                 total_seen_class_vox[l] += np.sum(uvlabel[:, 0] == l)
                 total_correct_class_vox[l] += np.sum((uvlabel[:, 0] == l) & (uvlabel[:, 1] == l))
-
+        # tmp print
+        print(batch_idx, 'ok')
     log_string('eval whole scene mean loss: %f' % (loss_sum / float(num_batches)))
     log_string('eval whole scene point accuracy vox: %f' % (total_correct_vox / float(total_seen_vox)))
     log_string('eval whole scene point avg class acc vox: %f' % (
