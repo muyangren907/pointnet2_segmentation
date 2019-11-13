@@ -56,9 +56,9 @@ if __name__ == '__main__':
         """
         tmp, _ = np.histogram(label, range(NUM_CLASSES + 1))
         label_count += tmp
-        print(tmp)
-        # print(_)
-        a = input('continue')
-        if a == 'q':
-            break
+        # print(tmp)
+        # # print(_)
+        # a = input('continue')
+        # if a == 'q':
+        #     break
     print(label_count)
