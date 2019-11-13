@@ -62,3 +62,4 @@ if __name__ == '__main__':
         # if a == 'q':
         #     break
     print(label_count)
+    print(np.sum(label_count))
