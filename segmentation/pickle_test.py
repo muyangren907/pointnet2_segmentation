@@ -6,10 +6,12 @@ import numpy as np
 parser = argparse.ArgumentParser()
 parser.add_argument('--data', type=str, default='scannet', help='dataset')
 parser.add_argument('--split', type=str, default='train', help='split')
+parser.add_argument('--num_c', type=int, default=21, help='num_classes')
 FLAGS = parser.parse_args()
 
 DATASET = FLAGS.data
 SPLIT = FLAGS.split
+NUM_CLASSES = FLAGS.num_c
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -32,7 +34,10 @@ if __name__ == '__main__':
     print(scene_points_list[0])
     print(semantic_labels_list[0])
     input('continue')
-
+    if DATASET == 'scannet':
+        NUM_CLASSES = 21
+    elif DATASET == 'kitti':
+        NUM_CLASSES = 9
     # m, n = 999, -1
     #
     # for label in semantic_labels_list:
@@ -41,6 +46,13 @@ if __name__ == '__main__':
     #     m, n = max(a, m), min(b, n)
     a = 'r'
     for label in semantic_labels_list:
+        # 统计0-21各有多少个
+        """ 
+        tmp
+        [32198 12867 25137     0  1554     0     0     0     0     0     0     0     0     0  1917     0     0     0     0     0     0]
+        _
+        [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21]
+        """
         tmp, _ = np.histogram(label, range(22))
         print(tmp)
         print(_)
