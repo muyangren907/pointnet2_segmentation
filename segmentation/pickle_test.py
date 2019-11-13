@@ -40,8 +40,10 @@ if __name__ == '__main__':
     #     print(m, a, n, b)
     #     m, n = max(a, m), min(b, n)
     a = 'r'
-    for label in semantic_labels_list and a != 'q':
+    for label in semantic_labels_list:
         tmp, _ = np.histogram(label, range(22))
         print(tmp)
         print(_)
         a = input('continue')
+        if a == 'q':
+            break
