@@ -32,9 +32,13 @@ if __name__ == '__main__':
     print(scene_points_list[0])
     print(semantic_labels_list[0])
 
-    m, n = 999, -1
-
+    # m, n = 999, -1
+    #
+    # for label in semantic_labels_list:
+    #     a, b = np.max(label), np.min(label)
+    #     print(m, a, n, b)
+    #     m, n = max(a, m), min(b, n)
     for label in semantic_labels_list:
-        a, b = np.max(label), np.min(label)
-        print(m, a, n, b)
-        m, n = max(a, m), min(b, n)
+        tmp, _ = np.histogram(label, range(22))
+        print(tmp)
+        print(_)
