@@ -109,4 +109,7 @@ if __name__ == '__main__':
     # b = 1.000
     # print(a, b, a == b)
     scene_points_list, semantic_labels_list = read_data()
-    data2pcd(scene_points_list[SID], semantic_labels_list[SID])
+    list_len = len(scene_points_list)
+    for SID in range(list_len):
+        print('[', SID + 1, '/', list_len, ']', end='\r')
+        data2pcd(scene_points_list[SID], semantic_labels_list[SID])
