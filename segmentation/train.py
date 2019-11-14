@@ -447,7 +447,9 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
     extra_batch_smpw = np.zeros((0, NUM_POINT))
     for batch_idx in range(num_batches):
         # tmp print
-        print(batch_idx)
+        print('[', batch_idx + 1, '/', num_batches, ']', end='\r')
+        # 数据加载时，若分割不对，即步长太小会导致内存占用过大而killed
+        # 步长详见 dataset.py DatasetWholeScene 中 step
         if not is_continue_batch:
             batch_data, batch_label, batch_smpw = TEST_DATASET_WHOLE_SCENE[batch_idx]
             batch_data = np.concatenate((batch_data, extra_batch_data), axis=0)
@@ -475,7 +477,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
             batch_label = batch_label[:BATCH_SIZE, :]
             batch_smpw = batch_smpw[:BATCH_SIZE, :]
 
-        print('load ok')
+        # print('load ok')
 
         aug_data = batch_data
         feed_dict = {ops['pointclouds_pl']: aug_data,
