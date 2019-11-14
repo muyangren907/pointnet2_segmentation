@@ -17,11 +17,13 @@ sys.path.append(BASE_DIR)  # model
 sys.path.append(ROOT_DIR)  # provider
 sys.path.append(os.path.join(ROOT_DIR, 'utils'))
 
-if 'COLAB_TPU_ADDR' not in os.environ:
-    print('ERROR: Not connected to a TPU runtime')
-else:
-  tpu_address = 'grpc://' + os.environ['COLAB_TPU_ADDR']
-  print ('TPU address is', tpu_address)
+# if 'COLAB_TPU_ADDR' not in os.environ:
+#     print('ERROR: Not connected to a TPU runtime')
+# else:
+#   tpu_address = 'grpc://' + os.environ['COLAB_TPU_ADDR']
+#   print ('TPU address is', tpu_address)
+
+tpu_address = 'grpc://10.96.185.138:8470'
 
 import provider
 import tf_util
@@ -34,7 +36,7 @@ import dataset
 import scannet_dataset
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
+parser.add_argument('--tpu', type=int, default='grpc://10.96.185.138:8470', help='tpu_address')
 parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='Model name [default: pointnet2_sem_seg]')
 parser.add_argument('--log_dir', type=str, default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=8192, help='Point Number [default: 8192]')
@@ -57,7 +59,8 @@ BATCH_SIZE = FLAGS.batch_size
 NUM_POINT = FLAGS.num_point
 MAX_EPOCH = FLAGS.max_epoch
 BASE_LEARNING_RATE = FLAGS.learning_rate
-GPU_INDEX = FLAGS.gpu
+# GPU_INDEX = FLAGS.gpu
+TPU_ADDRESS = FLAGS.tpu
 MOMENTUM = FLAGS.momentum
 OPTIMIZER = FLAGS.optimizer
 DECAY_STEP = FLAGS.decay_step
@@ -130,46 +133,49 @@ def get_bn_decay(batch):
 def train():
     global EPOCH_CNT
     with tf.Graph().as_default():
-        with tf.device('/gpu:' + str(GPU_INDEX)):
-            pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT)
-            is_training_pl = tf.placeholder(tf.bool, shape=())
-            print(is_training_pl)
+        # with tf.device('/gpu:' + str(GPU_INDEX)):
+        pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT)
+        is_training_pl = tf.placeholder(tf.bool, shape=())
+        print(is_training_pl)
 
-            # Note the global_step=batch parameter to minimize. 
-            # That tells the optimizer to helpfully increment the 'batch' parameter for you every time it trains.
-            batch = tf.Variable(0)
-            bn_decay = get_bn_decay(batch)
-            tf.summary.scalar('bn_decay', bn_decay)
+        # Note the global_step=batch parameter to minimize.
+        # That tells the optimizer to helpfully increment the 'batch' parameter for you every time it trains.
+        batch = tf.Variable(0)
+        bn_decay = get_bn_decay(batch)
+        tf.summary.scalar('bn_decay', bn_decay)
 
-            print("--- Get model and loss ---")
-            # Get model and loss 
-            pred, end_points = MODEL.get_model(pointclouds_pl, is_training_pl, NUM_CLASSES, bn_decay=bn_decay)
-            loss = MODEL.get_loss(pred, labels_pl, smpws_pl)
-            tf.summary.scalar('loss', loss)
+        print("--- Get model and loss ---")
+        # Get model and loss
+        pred, end_points = MODEL.get_model(pointclouds_pl, is_training_pl, NUM_CLASSES, bn_decay=bn_decay)
+        loss = MODEL.get_loss(pred, labels_pl, smpws_pl)
+        tf.summary.scalar('loss', loss)
 
-            correct = tf.equal(tf.argmax(pred, 2), tf.to_int64(labels_pl))
-            accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) / float(BATCH_SIZE * NUM_POINT)
-            tf.summary.scalar('accuracy', accuracy)
+        correct = tf.equal(tf.argmax(pred, 2), tf.to_int64(labels_pl))
+        accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) / float(BATCH_SIZE * NUM_POINT)
+        tf.summary.scalar('accuracy', accuracy)
 
-            print("--- Get training operator ---")
-            # Get training operator
-            learning_rate = get_learning_rate(batch)
-            tf.summary.scalar('learning_rate', learning_rate)
-            if OPTIMIZER == 'momentum':
-                optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=MOMENTUM)
-            elif OPTIMIZER == 'adam':
-                optimizer = tf.train.AdamOptimizer(learning_rate)
-            train_op = optimizer.minimize(loss, global_step=batch)
+        print("--- Get training operator ---")
+        # Get training operator
+        learning_rate = get_learning_rate(batch)
+        tf.summary.scalar('learning_rate', learning_rate)
+        if OPTIMIZER == 'momentum':
+            optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=MOMENTUM)
+        elif OPTIMIZER == 'adam':
+            optimizer = tf.train.AdamOptimizer(learning_rate)
+        train_op = optimizer.minimize(loss, global_step=batch)
 
-            # Add ops to save and restore all the variables.
-            saver = tf.train.Saver()
+        # Add ops to save and restore all the variables.
+        saver = tf.train.Saver()
 
         # Create a session
-        config = tf.ConfigProto()
-        config.gpu_options.allow_growth = True
-        config.allow_soft_placement = True
-        config.log_device_placement = False
-        sess = tf.Session(config=config)
+        # config = tf.ConfigProto()
+        # config.gpu_options.allow_growth = True
+        # config.allow_soft_placement = True
+        # config.log_device_placement = False
+        # sess = tf.Session(config=config)
+        sess = tf.Session(tpu_address)
+        # 启动TPU
+        sess.run(tf.contrib.tpu.initialize_system())
 
         # Add summary writers
         merged = tf.summary.merge_all()
@@ -211,6 +217,8 @@ def train():
             if epoch % 10 == 0:
                 save_path = saver.save(sess, os.path.join(LOG_DIR, "model.ckpt"))
                 log_string("Model saved in file: %s" % save_path)
+        # 关闭TPU
+        sess.run(tf.contrib.tpu.shutdown_system())
 
 
 def get_batch_wdp(dataset, idxs, start_idx, end_idx):
