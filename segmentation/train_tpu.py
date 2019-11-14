@@ -36,7 +36,7 @@ import dataset
 import scannet_dataset
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--tpu', type=int, default='grpc://10.96.185.138:8470', help='tpu_address')
+parser.add_argument('--tpu', type=str, default='grpc://10.96.185.138:8470', help='tpu_address')
 parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='Model name [default: pointnet2_sem_seg]')
 parser.add_argument('--log_dir', type=str, default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=8192, help='Point Number [default: 8192]')
