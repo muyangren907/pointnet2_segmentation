@@ -221,9 +221,11 @@ def train():
                'end_points': end_points}
 
         best_acc = -1
-
-        best_model_file = os.path.join(LOG_DIR, "%s_best.ckpt" % DATASET)
-        model_file = os.path.join(LOG_DIR, "%s.ckpt" % DATASET)
+        model_save_path = os.path.join(LOG_DIR, "model_save")
+        if not os.path.exists(model_save_path):
+            os.makedirs(model_save_path)
+        best_model_file = os.path.join(model_save_path, "%s_best.ckpt" % DATASET)
+        model_file = os.path.join(model_save_path, "%s.ckpt" % DATASET)
         # Load model
         if os.path.exists(best_model_file):
             save_path = saver.restore(sess, best_model_file)
