@@ -175,7 +175,7 @@ def train():
         # sess = tf.Session(config=config)
         sess = tf.Session(tpu_address)
         # 启动TPU
-        sess.run(tf.contrib.tpu.initialize_system())
+        # sess.run(tf.contrib.tpu.initialize_system())
 
         # Add summary writers
         merged = tf.summary.merge_all()
@@ -218,7 +218,7 @@ def train():
                 save_path = saver.save(sess, os.path.join(LOG_DIR, "model.ckpt"))
                 log_string("Model saved in file: %s" % save_path)
         # 关闭TPU
-        sess.run(tf.contrib.tpu.shutdown_system())
+        # sess.run(tf.contrib.tpu.shutdown_system())
 
 
 def get_batch_wdp(dataset, idxs, start_idx, end_idx):
