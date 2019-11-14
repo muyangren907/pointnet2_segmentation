@@ -63,3 +63,11 @@ if __name__ == '__main__':
         #     break
     print(label_count)
     print(np.sum(label_count))
+    print()
+    a = np.array([1, 1, 2])
+    b = np.array([1, 2, 3])
+    c = a + b
+    print(a)
+    print(b)
+    print(c)
+    print(c - 2)
