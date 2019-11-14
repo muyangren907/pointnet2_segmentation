@@ -63,8 +63,9 @@ if __name__ == '__main__':
         #     break
     print(label_count)
     label_sum = np.sum(label_count)
-    print()
+    print(label_sum)
     label_weight = label_count / label_sum
+    print(label_weight)
     # print()
     # a = np.array([1, 1, 2])
     # b = np.array([1, 2, 3])
