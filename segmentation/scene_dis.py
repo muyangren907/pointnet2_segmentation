@@ -2,8 +2,8 @@ import pickle
 import os
 import argparse
 import numpy as np
-import pclpy
-from pclpy import pcl
+# import pclpy
+# from pclpy import pcl
 from struct import pack, unpack
 import random
 
