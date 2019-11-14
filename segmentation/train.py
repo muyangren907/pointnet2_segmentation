@@ -228,11 +228,11 @@ def train():
         best_model_file = os.path.join(model_save_path, "%s_best.ckpt" % DATASET)
         model_file = os.path.join(model_save_path, "%s.ckpt" % DATASET)
         # Load model
-        print(best_model_file)
-        print(os.path.exists(best_model_file + '.index'))
+        # print(best_model_file)
+        # print(os.path.exists(best_model_file + '.index'))
         if os.path.exists(best_model_file + '.index'):
-            save_path = saver.restore(sess, best_model_file)
-            log_string("Model load from file: %s" % save_path)
+            saver.restore(sess, best_model_file)
+            log_string("Model load from file: %s" % best_model_file)
 
         for epoch in range(MAX_EPOCH):
             log_string('\n**** EPOCH %03d ****' % epoch)
