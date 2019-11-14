@@ -226,7 +226,8 @@ def train():
         model_file = os.path.join(LOG_DIR, "%s.ckpt" % DATASET)
         # Load model
         if os.path.exists(best_model_file):
-            saver.restore(sess, best_model_file)
+            save_path = saver.restore(sess, best_model_file)
+            log_string("Model load from file: %s" % save_path)
 
         for epoch in range(MAX_EPOCH):
             log_string('\n**** EPOCH %03d ****' % epoch)
