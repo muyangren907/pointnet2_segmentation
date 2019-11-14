@@ -62,7 +62,9 @@ if __name__ == '__main__':
         # if a == 'q':
         #     break
     print(label_count)
-    print(np.sum(label_count))
+    label_sum = np.sum(label_count)
+    print()
+    label_weight = label_count / label_sum
     # print()
     # a = np.array([1, 1, 2])
     # b = np.array([1, 2, 3])
