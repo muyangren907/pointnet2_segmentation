@@ -130,6 +130,10 @@ class DatasetWholeScene():
         nsubvolume_y = np.ceil((coordmax[1] - coordmin[1]) / self.step).astype(np.int32)
         # tmp print
         # print(nsubvolume_x, nsubvolume_y)
+        if nsubvolume_x * nsubvolume_y >= 100:
+            self.step = max((coordmax[0] - coordmin[0]) / 10, (coordmax[1] - coordmin[1]) / 10)
+            print('STEP change to %s' % self.step)
+
         point_sets = list()
         semantic_segs = list()
         sample_weights = list()
