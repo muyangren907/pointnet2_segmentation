@@ -72,10 +72,13 @@ if __name__ == '__main__':
     print(c)
     print(c - 2)
     point_set_ini = np.array(
-        [1.2, 3, 5],
-        [1, 2, 3.3],
-        [2.2, 1.3, 4.5],
-        [1, 5, 6]
+        [
+            [1.2, 3, 5],
+            [1.4, 2, 3.3],
+            [1.2, 2.4, 3.5],
+            [0.9, 1.2, 1.3]
+        ]
+
     )
     print('point_set_ini')
     print(point_set_ini)
