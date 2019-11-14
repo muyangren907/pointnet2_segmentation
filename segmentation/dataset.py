@@ -125,6 +125,8 @@ class DatasetWholeScene():
         coordmin = np.min(point_set_ini, axis=0)
         nsubvolume_x = np.ceil((coordmax[0] - coordmin[0]) / 1.5).astype(np.int32)
         nsubvolume_y = np.ceil((coordmax[1] - coordmin[1]) / 1.5).astype(np.int32)
+        # tmp print
+        print(nsubvolume_x, nsubvolume_y)
         point_sets = list()
         semantic_segs = list()
         sample_weights = list()
@@ -150,6 +152,8 @@ class DatasetWholeScene():
                 point_sets.append(np.expand_dims(point_set, 0))  # 1xNx3
                 semantic_segs.append(np.expand_dims(semantic_seg, 0))  # 1xN
                 sample_weights.append(np.expand_dims(sample_weight, 0))  # 1xN
+        # tmp print
+        print('loop ok')
         point_sets = np.concatenate(tuple(point_sets), axis=0)
         semantic_segs = np.concatenate(tuple(semantic_segs), axis=0)
         sample_weights = np.concatenate(tuple(sample_weights), axis=0)
