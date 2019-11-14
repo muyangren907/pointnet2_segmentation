@@ -17,13 +17,13 @@ sys.path.append(BASE_DIR)  # model
 sys.path.append(ROOT_DIR)  # provider
 sys.path.append(os.path.join(ROOT_DIR, 'utils'))
 
-# if 'COLAB_TPU_ADDR' not in os.environ:
-#     print('ERROR: Not connected to a TPU runtime')
-# else:
-#   tpu_address = 'grpc://' + os.environ['COLAB_TPU_ADDR']
-#   print ('TPU address is', tpu_address)
+if 'COLAB_TPU_ADDR' not in os.environ:
+    print('ERROR: Not connected to a TPU runtime')
+else:
+  tpu_address = 'grpc://' + os.environ['COLAB_TPU_ADDR']
+  print ('TPU address is', tpu_address)
 
-tpu_address = 'grpc://10.96.185.138:8470'
+# tpu_address = 'grpc://10.96.185.138:8470'
 
 import provider
 import tf_util
@@ -36,7 +36,7 @@ import dataset
 import scannet_dataset
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--tpu', type=str, default='grpc://10.96.185.138:8470', help='tpu_address')
+# parser.add_argument('--tpu', type=str, default='grpc://10.96.185.138:8470', help='tpu_address')
 parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='Model name [default: pointnet2_sem_seg]')
 parser.add_argument('--log_dir', type=str, default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=8192, help='Point Number [default: 8192]')
@@ -60,7 +60,7 @@ NUM_POINT = FLAGS.num_point
 MAX_EPOCH = FLAGS.max_epoch
 BASE_LEARNING_RATE = FLAGS.learning_rate
 # GPU_INDEX = FLAGS.gpu
-TPU_ADDRESS = FLAGS.tpu
+# TPU_ADDRESS = FLAGS.tpu
 MOMENTUM = FLAGS.momentum
 OPTIMIZER = FLAGS.optimizer
 DECAY_STEP = FLAGS.decay_step
