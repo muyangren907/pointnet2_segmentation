@@ -141,6 +141,10 @@ class DatasetWholeScene():
                 # curmax = coordmin + [(i + 1) * 1.5, (j + 1) * 1.5, coordmax[2] - coordmin[2]]
                 curmax = coordmin + [(i + 1) * self.step, (j + 1) * self.step, coordmax[2] - coordmin[2]]
                 curchoice = np.sum((point_set_ini >= (curmin - 0.2)) * (point_set_ini <= (curmax + 0.2)), axis=1) == 3
+                print(curmin)
+                print(curmax)
+                print(curmin-0.2)
+                print(curmax - 0.2)
                 cur_point_set = point_set_ini[curchoice, :]
                 cur_semantic_seg = semantic_seg_ini[curchoice]
                 if len(cur_semantic_seg) == 0:
