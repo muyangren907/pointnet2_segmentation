@@ -475,6 +475,8 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
             batch_label = batch_label[:BATCH_SIZE, :]
             batch_smpw = batch_smpw[:BATCH_SIZE, :]
 
+        print('load ok')
+
         aug_data = batch_data
         feed_dict = {ops['pointclouds_pl']: aug_data,
                      ops['labels_pl']: batch_label,
