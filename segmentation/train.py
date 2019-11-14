@@ -229,8 +229,8 @@ def train():
         model_file = os.path.join(model_save_path, "%s.ckpt" % DATASET)
         # Load model
         print(best_model_file)
-        print(os.path.exists(best_model_file))
-        if os.path.exists(best_model_file):
+        print(os.path.exists(best_model_file + '.index'))
+        if os.path.exists(best_model_file + '.index'):
             save_path = saver.restore(sess, best_model_file)
             log_string("Model load from file: %s" % save_path)
 
