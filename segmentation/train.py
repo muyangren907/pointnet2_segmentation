@@ -321,7 +321,7 @@ def eval_one_epoch(sess, ops, test_writer):
     is_training = False
     test_idxs = np.arange(0, len(TEST_DATASET))
     num_batches = len(TEST_DATASET) // BATCH_SIZE
-    print('num_batches', num_batches)
+    # print('num_batches', num_batches)
 
     total_correct = 0
     total_seen = 0
@@ -342,6 +342,7 @@ def eval_one_epoch(sess, ops, test_writer):
     labelweights = np.zeros(NUM_CLASSES)
     labelweights_vox = np.zeros(NUM_CLASSES)
     for batch_idx in range(num_batches):
+        print('[', batch_idx + 1, '/', num_batches, ']', end='\r')
         start_idx = batch_idx * BATCH_SIZE
         end_idx = (batch_idx + 1) * BATCH_SIZE
         batch_data, batch_label, batch_smpw = get_batch(TEST_DATASET, test_idxs, start_idx, end_idx)
@@ -353,7 +354,7 @@ def eval_one_epoch(sess, ops, test_writer):
                      ops['smpws_pl']: batch_smpw,
                      ops['is_training_pl']: is_training}
         # tmp print
-        print(batch_idx)
+        # print(batch_idx)
         summary, step, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
                                                       ops['loss'], ops['pred']], feed_dict=feed_dict)
         test_writer.add_summary(summary, step)
@@ -521,7 +522,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
                 total_seen_class_vox[l] += np.sum(uvlabel[:, 0] == l)
                 total_correct_class_vox[l] += np.sum((uvlabel[:, 0] == l) & (uvlabel[:, 1] == l))
         # tmp print
-        print(batch_idx, 'ok')
+        # print(batch_idx, 'ok')
     log_string('eval whole scene mean loss: %f' % (loss_sum / float(num_batches)))
     log_string('eval whole scene point accuracy vox: %f' % (total_correct_vox / float(total_seen_vox)))
     log_string('eval whole scene point avg class acc vox: %f' % (
