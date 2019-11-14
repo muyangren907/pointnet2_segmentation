@@ -68,7 +68,7 @@ def data2pcd(scene_points, semantic_labels):
         semantic_labels_tmp[chose, 1] = rgb_list[i]
     rgb_info = semantic_labels_tmp[:, 1]
     scene_points_o = np.c_[scene_points, rgb_info]
-    print(scene_points_o)
+    # print(scene_points_o)
     conststr = 'VERSION 0.7\nFIELDS x y z rgb\nSIZE 4 4 4 4\nTYPE F F F F\nCOUNT 1 1 1 1\nWIDTH %s\nHEIGHT 1\nVIEWPOINT 0 0 0 1 0 0 0\nPOINTS %s\nDATA ascii\n' % (
         semantic_labels_len, semantic_labels_len)
     save_path = os.path.join(DATA_DIR, 'PCD', DATASET, SPLIT, '%06d.pcd' % SID)
