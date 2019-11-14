@@ -19,6 +19,7 @@ DATA_DIR = os.path.join(ROOT_DIR, 'data')
 
 if __name__ == '__main__':
     data_filename = os.path.join(DATA_DIR, DATASET, '%s_%s.pickle' % (DATASET, SPLIT))
+    print('Load %s' % data_filename)
 
     try:
         with open(data_filename, 'rb') as fp:
