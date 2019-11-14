@@ -29,6 +29,7 @@ import scannet_dataset
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
 parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='Model name [default: pointnet2_sem_seg]')
+parser.add_argument('--model_load', type=str, default='kitti.ckpt', help='Model data file name')
 parser.add_argument('--log_dir', type=str, default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=8192, help='Point Number [default: 8192]')
 parser.add_argument('--max_epoch', type=int, default=201, help='Epoch to run [default: 201]')
@@ -220,8 +221,14 @@ def train():
                'end_points': end_points}
 
         best_acc = -1
+
+        best_model_file = os.path.join(LOG_DIR, "%s_best.ckpt" % DATASET)
+        model_file = os.path.join(LOG_DIR, "%s.ckpt" % DATASET)
+        # Load model
+        saver.restore(sess, sess, )
+
         for epoch in range(MAX_EPOCH):
-            log_string('\n**** EPOCH %03d ****' % (epoch))
+            log_string('\n**** EPOCH %03d ****' % epoch)
             sys.stdout.flush()
 
             train_one_epoch(sess, ops, train_writer)
@@ -231,12 +238,13 @@ def train():
                 acc = eval_whole_scene_one_epoch(sess, ops, test_writer)
             if acc > best_acc:
                 best_acc = acc
-                save_path = saver.save(sess, os.path.join(LOG_DIR, "best_model_epoch_%03d.ckpt" % (epoch)))
+                # save_path = saver.save(sess, os.path.join(LOG_DIR, "best_model_epoch_%03d.ckpt" % (epoch)))
+                save_path = saver.save(sess, best_model_file)
                 log_string("Model saved in file: %s" % save_path)
 
             # Save the variables to disk.
             if epoch % 10 == 0:
-                save_path = saver.save(sess, os.path.join(LOG_DIR, "model.ckpt"))
+                save_path = saver.save(sess, model_file)
                 log_string("Model saved in file: %s" % save_path)
 
 
