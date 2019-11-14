@@ -2,6 +2,7 @@ import pickle
 import os
 import argparse
 import numpy as np
+# pip3 install python-pcl
 import pclpy
 from pclpy import pcl
 from struct import pack, unpack
