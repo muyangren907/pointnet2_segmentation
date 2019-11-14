@@ -83,7 +83,8 @@ class Dataset():
 
 
 class DatasetWholeScene():
-    def __init__(self, root, num_classes=21, npoints=8192, split='train', datasetname='scannet'):
+    def __init__(self, root, num_classes=21, npoints=8192, split='train', datasetname='scannet', step=1.5):
+        self.step = step
         self.root = root
         self.num_classes = num_classes
         self.npoints = npoints
@@ -123,8 +124,10 @@ class DatasetWholeScene():
         coordmax = np.max(point_set_ini, axis=0)
         # 获取(x,y,z)每一项的最小值，不一定为同一个点
         coordmin = np.min(point_set_ini, axis=0)
-        nsubvolume_x = np.ceil((coordmax[0] - coordmin[0]) / 1.5).astype(np.int32)
-        nsubvolume_y = np.ceil((coordmax[1] - coordmin[1]) / 1.5).astype(np.int32)
+        # nsubvolume_x = np.ceil((coordmax[0] - coordmin[0]) / 1.5).astype(np.int32)
+        nsubvolume_x = np.ceil((coordmax[0] - coordmin[0]) / self.step).astype(np.int32)
+        # nsubvolume_y = np.ceil((coordmax[1] - coordmin[1]) / 1.5).astype(np.int32)
+        nsubvolume_y = np.ceil((coordmax[1] - coordmin[1]) / self.step).astype(np.int32)
         # tmp print
         print(nsubvolume_x, nsubvolume_y)
         point_sets = list()
@@ -133,8 +136,10 @@ class DatasetWholeScene():
         isvalid = False
         for i in range(nsubvolume_x):
             for j in range(nsubvolume_y):
-                curmin = coordmin + [i * 1.5, j * 1.5, 0]
-                curmax = coordmin + [(i + 1) * 1.5, (j + 1) * 1.5, coordmax[2] - coordmin[2]]
+                # curmin = coordmin + [i * 1.5, j * 1.5, 0]
+                curmin = coordmin + [i * self.step, j * self.step, 0]
+                # curmax = coordmin + [(i + 1) * 1.5, (j + 1) * 1.5, coordmax[2] - coordmin[2]]
+                curmax = coordmin + [(i + 1) * self.step, (j + 1) * self.step, coordmax[2] - coordmin[2]]
                 curchoice = np.sum((point_set_ini >= (curmin - 0.2)) * (point_set_ini <= (curmax + 0.2)), axis=1) == 3
                 cur_point_set = point_set_ini[curchoice, :]
                 cur_semantic_seg = semantic_seg_ini[curchoice]

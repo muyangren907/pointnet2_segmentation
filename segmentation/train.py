@@ -85,7 +85,7 @@ DATA_PATH = os.path.join(ROOT_DIR, 'data', DATASET)
 if not os.path.exists(DATA_PATH):
     os.makedirs(DATA_PATH)
 
-NUM_CLASSES = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
+NUM_CLASSES, STEP = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 
 # TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
 # TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
@@ -99,7 +99,7 @@ TRAIN_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints
 TEST_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='test',
                                datasetname=DATASET)
 TEST_DATASET_WHOLE_SCENE = dataset.DatasetWholeScene(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT,
-                                                     split='test', datasetname=DATASET)
+                                                     split='test', datasetname=DATASET, step=STEP)
 
 
 # if DATASET == 'scannet':

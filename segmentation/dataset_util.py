@@ -4,6 +4,7 @@ import kitti_util
 
 def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
     NUM_CLASSES = 21
+    STEP = 1.5
     if DATASET == 'scannet':
         NUM_CLASSES = 21
         www = 'https://shapenet.cs.stanford.edu/media/scannet_data_pointnet2.zip'
@@ -33,6 +34,7 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
             os.system('rmdir %s' % (os.path.join(DATA_PATH, 'data')))
     elif DATASET == 'kitti':
         NUM_CLASSES = 9
+        STEP = 1
         train_file = os.path.join(DATA_PATH, 'kitti_train.pickle')
         test_file = os.path.join(DATA_PATH, 'kitti_test.pickle')
         if not (os.path.exists(train_file) and os.path.exists(test_file)):
@@ -69,7 +71,7 @@ def deal_dataset(DATASET, DOWNLOADER, DATA_PATH):
     print('*' * 6)
     print('DATASET:', DATASET, '\nDATA_PATH:', DATA_PATH, '\nNUM_CLASSES:', NUM_CLASSES)
     print('*' * 6)
-    return NUM_CLASSES
+    return NUM_CLASSES, STEP
 
 
 if __name__ == '__main__':
