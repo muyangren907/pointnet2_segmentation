@@ -8,6 +8,7 @@ import pprint
 import pickle
 import psutil
 import gc
+import random
 
 file_num = 0
 
@@ -258,7 +259,7 @@ def inverse_rigid_trans(Tr):
 label_list = [b'Pedestrian', b'Person_sitting', b'Car', b'Van', b'Truck', b'Cyclist', b'Tram', b'Misc', b'DontCare']
 
 
-def dealdata2pickle(spos, epos, file_num):
+def dealdata2pickle(spos, epos, file_num, split):
     points_o_list, labelslist = [], []
 
     # save_object_pickle_path = os.path.join(DATA_DIR, 'kitti')
@@ -271,8 +272,12 @@ def dealdata2pickle(spos, epos, file_num):
     label_path = os.path.join(DATA_DIR, 'training', 'label_2')
     calib_path = os.path.join(DATA_DIR, 'training', 'calib')
 
+    rsl = random.sample(range(spos, epos), file_num)
+    # totol = epos - spos
     # for data_id in range(file_num):
-    for data_id in range(spos, epos):
+    # for data_id in range(spos, epos):
+    index = 1
+    for data_id in rsl:
         lidar_file = os.path.join(lidar_path, '%06d.bin' % data_id)
         label_file = os.path.join(label_path, '%06d.txt' % data_id)
         calib_file = os.path.join(calib_path, '%06d.txt' % data_id)
@@ -351,27 +356,33 @@ def dealdata2pickle(spos, epos, file_num):
         labelslist.append(labels)
         # print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, get_memory_info(),
         #       end='\r')
-        print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, end='\r')
-
-        if (data_id + 1) % 1000 == 0:
-            file_name = ''
-            if data_id // 1000 == 0:
-                file_name = 'kitti_train.pickle'
-            else:
-                file_name = 'kitti_train_%s.pickle' % (data_id // 1000)
-            save_object_pickle_file = os.path.join(save_object_pickle_path, file_name)
-            with open(save_object_pickle_file, 'wb') as pf:
-                pickle.dump(points_o_list, pf)
-                pickle.dump(labelslist, pf)
-            print('save', save_object_pickle_file, 'succeed!')
-            return
-        if data_id + 1 == 1300:
-            save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_test.pickle')
-            with open(save_object_pickle_file, 'wb') as pf:
-                pickle.dump(points_o_list, pf)
-                pickle.dump(labelslist, pf)
-            print('save', save_object_pickle_file, 'succeed!')
-            return
+        # print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, end='\r')
+        print('[', index, '/', file_num, ']', points_o.shape, labels.shape, end='\r')
+        index += 1
+        # if (data_id + 1) % 1000 == 0:
+        #     file_name = ''
+        #     if data_id // 1000 == 0:
+        #         file_name = 'kitti_train.pickle'
+        #     else:
+        #         file_name = 'kitti_train_%s.pickle' % (data_id // 1000)
+        #     save_object_pickle_file = os.path.join(save_object_pickle_path, file_name)
+        #     with open(save_object_pickle_file, 'wb') as pf:
+        #         pickle.dump(points_o_list, pf)
+        #         pickle.dump(labelslist, pf)
+        #     print('save', save_object_pickle_file, 'succeed!')
+        #     return
+        # if data_id + 1 == 1300:
+        #     save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_test.pickle')
+        #     with open(save_object_pickle_file, 'wb') as pf:
+        #         pickle.dump(points_o_list, pf)
+        #         pickle.dump(labelslist, pf)
+        #     print('save', save_object_pickle_file, 'succeed!')
+        #     return
+    save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_%s.pickle' % split)
+    with open(save_object_pickle_file, 'wb') as pf:
+        pickle.dump(points_o_list, pf)
+        pickle.dump(labelslist, pf)
+    print('save', save_object_pickle_file, 'succeed!')
 
 
 # 获取文件夹下文件个数
@@ -386,14 +397,16 @@ def main():
     global file_num
     file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
     file_num = getfilenum(file_num_path)
+    dealdata2pickle(0, 6000, 1000, 'train')
+    dealdata2pickle(6001, file_num, 400, 'test')
     # for i in range(0, file_num, 1000):
     #     gc.collect()
     #     if i + 1000 < file_num:
     #         dealdata2pickle(i, i + 1000, file_num)
     #     else:
     #         dealdata2pickle(i, file_num, file_num)
-    for i in range(0, 1400, 1000):
-        dealdata2pickle(i, i + 1000, file_num)
+    # for i in range(0, 1400, 1000):
+    #     dealdata2pickle(i, i + 1000, file_num)
     # dealdata2pickle(file_num)
 
 
