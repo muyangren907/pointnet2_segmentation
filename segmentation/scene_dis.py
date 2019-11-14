@@ -60,7 +60,7 @@ def data2pcd(scene_points, semantic_labels):
 
     zeros = np.zeros(semantic_labels.shape[0])
     semantic_labels_tmp = np.c_[semantic_labels, zeros].astype(np.float32)
-    for i in range(label_count):
+    for i in range(label_classes):
         chose = semantic_labels_tmp[:, 0] == i
         semantic_labels_tmp[chose, 1] = rgb_list[i]
     rgb_info = semantic_labels_tmp[:, 1]
