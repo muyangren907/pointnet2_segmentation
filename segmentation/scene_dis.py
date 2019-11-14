@@ -71,7 +71,11 @@ def data2pcd(scene_points, semantic_labels):
     print(scene_points_o)
     conststr = 'VERSION 0.7\nFIELDS x y z rgb\nSIZE 4 4 4 4\nTYPE F F F F\nCOUNT 1 1 1 1\nWIDTH %s\nHEIGHT 1\nVIEWPOINT 0 0 0 1 0 0 0\nPOINTS %s\nDATA ascii\n' % (
         semantic_labels_len, semantic_labels_len)
-    save_file = os.path.join(DATA_DIR, DATASET, '%s_%06d.pcd' % (SPLIT, SID))
+    save_path = os.path.join(DATA_DIR, 'PCD', DATASET, SPLIT, '%06d.pcd' % SID)
+    # save_file = os.path.join(DATA_DIR, 'PCD', DATASET, SPLIT, '%06d.pcd' % SID)
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    save_file = os.path.join(save_path, '%06d.pcd' % SID)
     with open(save_file, 'a') as sf:
         sf.write(conststr)
         np.savetxt(sf, scene_points_o)
