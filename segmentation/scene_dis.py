@@ -35,7 +35,8 @@ def read_data():
         with open(data_filename, 'rb') as fp:
             scene_points_list = pickle.load(fp, encoding='latin1')
             semantic_labels_list = pickle.load(fp, encoding='latin1')
-    return scene_points_list,semantic_labels_list
+    return scene_points_list, semantic_labels_list
+
 
 def generate_rgb(rgb_num):
     rgb_list = []
@@ -79,3 +80,4 @@ if __name__ == '__main__':
     # b = 1.000
     # print(a, b, a == b)
     scene_points_list, semantic_labels_list = read_data()
+    data2pcd(scene_points_list, semantic_labels_list)
