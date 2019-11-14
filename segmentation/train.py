@@ -221,7 +221,7 @@ def train():
 
         best_acc = -1
         for epoch in range(MAX_EPOCH):
-            log_string('**** EPOCH %03d ****' % (epoch))
+            log_string('\n**** EPOCH %03d ****' % (epoch))
             sys.stdout.flush()
 
             train_one_epoch(sess, ops, train_writer)
@@ -335,7 +335,7 @@ def eval_one_epoch(sess, ops, test_writer):
     total_correct_class_vox = [0 for _ in range(NUM_CLASSES)]
 
     log_string(str(datetime.now()))
-    log_string('---- EPOCH %03d EVALUATION ----' % (EPOCH_CNT))
+    log_string('\n---- EPOCH %03d EVALUATION ----' % (EPOCH_CNT))
 
     # labelweights = np.zeros(21)
     # labelweights_vox = np.zeros(21)
@@ -434,7 +434,7 @@ def eval_whole_scene_one_epoch(sess, ops, test_writer):
     total_correct_class_vox = [0 for _ in range(NUM_CLASSES)]
 
     log_string(str(datetime.now()))
-    log_string('---- EPOCH %03d EVALUATION WHOLE SCENE----' % (EPOCH_CNT))
+    log_string('\n---- EPOCH %03d EVALUATION WHOLE SCENE----' % (EPOCH_CNT))
 
     # labelweights = np.zeros(21)
     # labelweights_vox = np.zeros(21)
