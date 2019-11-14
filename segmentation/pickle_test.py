@@ -73,10 +73,10 @@ if __name__ == '__main__':
     print(c - 2)
     point_set_ini = np.array(
         [
-            [1.2, 3, 5],
-            [1.4, 2, 3.3],
-            [1.2, 2.4, 3.5],
-            [0.9, 1.2, 1.3]
+            [7.2, 1, 2.9],
+            [8.4, 2, 1.4],
+            [3.2, 3.4, 2.5],
+            [2.9, 4.2, 1.3]
         ]
 
     )
@@ -85,15 +85,17 @@ if __name__ == '__main__':
     coordmax = np.max(point_set_ini, axis=0)
     # 获取(x,y,z)每一项的最小值，不一定为同一个点
     coordmin = np.min(point_set_ini, axis=0)
-    print(coordmax)
     print(coordmin)
+    print(coordmax)
 
     step = 1.6
     nsubvolume_x = np.ceil((coordmax[0] - coordmin[0]) / step).astype(np.int32)
-    # nsubvolume_y = np.ceil((coordmax[1] - coordmin[1]) / 1.5).astype(np.int32)
     nsubvolume_y = np.ceil((coordmax[1] - coordmin[1]) / step).astype(np.int32)
+    print(nsubvolume_x, nsubvolume_y)
     for i in range(nsubvolume_x):
         for j in range(nsubvolume_y):
+            print()
+            print(i, j)
             # curmin = coordmin + [i * 1.5, j * 1.5, 0]
             curmin = coordmin + [i * step, j * step, 0]
             print('curmin', curmin)
