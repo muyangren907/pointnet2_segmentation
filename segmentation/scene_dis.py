@@ -2,9 +2,9 @@ import pickle
 import os
 import argparse
 import numpy as np
-# pip3 install python-pcl
-import pclpy
-from pclpy import pcl
+# pclpy only support on windows
+# import pclpy
+# from pclpy import pcl
 from struct import pack, unpack
 import random
 
