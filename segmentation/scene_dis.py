@@ -80,4 +80,4 @@ if __name__ == '__main__':
     # b = 1.000
     # print(a, b, a == b)
     scene_points_list, semantic_labels_list = read_data()
-    data2pcd(scene_points_list, semantic_labels_list)
+    data2pcd(scene_points_list[0], semantic_labels_list[0])
