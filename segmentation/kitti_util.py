@@ -417,4 +417,4 @@ if __name__ == '__main__':
     # main()
     file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
     file_num = getfilenum(file_num_path)
-    dealdata2pickle(0, file_num, -1, 'train')
+    dealdata2pickle(0, 3000, -1, 'train')
