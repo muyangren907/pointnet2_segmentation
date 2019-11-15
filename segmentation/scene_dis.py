@@ -98,7 +98,7 @@ def data2pcd(scene_points, semantic_labels):
     # label_count = np.bincount(semantic_labels.astype(np.int32))
     # label_classes = len(label_count)
     # rgb_list = generate_rgb(label_classes)
-    label_list = np.unique(semantic_labels)
+    label_list = np.unique(semantic_labels.astype(np.int))
     print(label_list)
 
     rgb_list_path = os.path.join(DATA_DIR, 'PCD', DATASET)
