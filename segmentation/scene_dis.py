@@ -49,9 +49,12 @@ def read_data():
 
 def generate_rgb(rgb_num):
     rgb_list = []
+    # 确保随机性
+    rl, gl, bl = random.sample(range(0, 256), rgb_num), random.sample(range(0, 256), rgb_num), random.sample(
+        range(0, 256), rgb_num)
     for i in range(rgb_num):
-        r, g, b = random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)
-        rgb = (r << 16 | g << 8 | b)
+        # r, g, b = random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)
+        rgb = (rl[i] << 16 | gl[i] << 8 | bl[i])
         b = pack('i', rgb)
         frgb = unpack('f', b)[0]
         rgb_list.append(frgb)
