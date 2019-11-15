@@ -2,7 +2,8 @@ import pickle
 import os
 import argparse
 # import numpy as np
-import cupy as np
+# import cupy as np
+import minpy as np
 # pclpy only support on windows
 # import pclpy
 # from pclpy import pcl
