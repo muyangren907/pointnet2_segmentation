@@ -73,7 +73,7 @@ def data2pcd(scene_points, semantic_labels):
         os.makedirs(rgb_list_path)
     rgb_list_file = os.path.join(rgb_list_path, '%s_rgb.pickle' % DATASET)
     if os.path.exists(rgb_list_file):
-        print('Load rbg file from %s' % rgb_list_file)
+        # print('Load rbg file from %s' % rgb_list_file)
         with open(rgb_list_file, 'rb') as fp:
             rgb_list = pickle.load(fp)
     else:
