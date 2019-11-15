@@ -1,7 +1,8 @@
 import pickle
 import os
 import argparse
-import numpy as np
+# import numpy as np
+import cupy as np
 # pclpy only support on windows
 # import pclpy
 # from pclpy import pcl
@@ -11,13 +12,17 @@ import random
 parser = argparse.ArgumentParser()
 parser.add_argument('--data', type=str, default='scannet', help='dataset')
 parser.add_argument('--split', type=str, default='train', help='split')
-parser.add_argument('--sid', type=int, default=0, help='index of scene')
+parser.add_argument('--sid', type=int, default=-1, help='index of scene')
+parser.add_argument('--sid_l', type=int, default=-1, help='low index of scene')
+parser.add_argument('--sid_h', type=int, default=-1, help='high index of scene')
 parser.add_argument('--num_c', type=int, default=21, help='num_classes')
 FLAGS = parser.parse_args()
 
 DATASET = FLAGS.data
 SPLIT = FLAGS.split
 SID = FLAGS.sid
+SID_L = FLAGS.sid_l
+SID_H = FLAGS.sid_h
 NUM_CLASSES = FLAGS.num_c
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -59,7 +64,22 @@ def data2pcd(scene_points, semantic_labels):
     # obj = pclpy.pcl.PointCloud.PointXYZRGB()
     label_count = np.bincount(semantic_labels)
     label_classes = len(label_count)
-    rgb_list = generate_rgb(label_classes)
+    # rgb_list = generate_rgb(label_classes)
+    rgb_list_path = os.path.join(DATA_DIR, 'PCD', DATASET)
+    if not os.path.exists(rgb_list_path):
+        os.makedirs(rgb_list_path)
+    rgb_list_file = os.path.join(rgb_list_path, '%s_rgb.pickle' % DATASET)
+    if os.path.exists(rgb_list_file):
+        print('Load rbg file from %s' % rgb_list_file)
+        with open(rgb_list_file, 'rb') as fp:
+            rgb_list = pickle.load(fp)
+    else:
+        print('Generate rbg file')
+        rgb_list = generate_rgb(NUM_CLASSES)
+        print('Save rbg file at %s' % rgb_list_file)
+        with open(rgb_list_file, 'wb') as fp:
+            rgb_list = pickle.dump(rgb_list, fp)
+
     semantic_labels_len = semantic_labels.shape[0]
     zeros = np.zeros(semantic_labels_len)
     semantic_labels_tmp = np.c_[semantic_labels, zeros].astype(np.float32)
@@ -71,7 +91,7 @@ def data2pcd(scene_points, semantic_labels):
     # print(scene_points_o)
     conststr = 'VERSION 0.7\nFIELDS x y z rgb\nSIZE 4 4 4 4\nTYPE F F F F\nCOUNT 1 1 1 1\nWIDTH %s\nHEIGHT 1\nVIEWPOINT 0 0 0 1 0 0 0\nPOINTS %s\nDATA ascii\n' % (
         semantic_labels_len, semantic_labels_len)
-    save_path = os.path.join(DATA_DIR, 'PCD', DATASET, SPLIT, '%06d.pcd' % SID)
+    save_path = os.path.join(DATA_DIR, 'PCD', DATASET, SPLIT)
     # save_file = os.path.join(DATA_DIR, 'PCD', DATASET, SPLIT, '%06d.pcd' % SID)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -110,6 +130,14 @@ if __name__ == '__main__':
     # print(a, b, a == b)
     scene_points_list, semantic_labels_list = read_data()
     list_len = len(scene_points_list)
-    for SID in range(list_len):
-        print('[', SID + 1, '/', list_len, ']', end='\r')
+    l, h = 0, list_len
+    if SID == -1:
+        if SID_L != -1:
+            l = SID_L
+        if SID_H != -1:
+            h = SID_H
+        for SID in range(l, h):
+            print('[', SID + 1, '/', list_len, ']', end='\r')
+            data2pcd(scene_points_list[SID], semantic_labels_list[SID])
+    else:
         data2pcd(scene_points_list[SID], semantic_labels_list[SID])
