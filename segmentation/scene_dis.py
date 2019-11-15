@@ -5,8 +5,7 @@ import numpy as np
 # import cupy as np
 # import minpy as np
 # pclpy only support on windows
-import pclpy
-from pclpy import pcl
+
 from struct import pack, unpack
 import colorsys
 import random
@@ -139,6 +138,8 @@ def data2pcd(scene_points, semantic_labels):
 
 
 def pcdview(file_path):
+    import pclpy
+    from pclpy import pcl
     # 读取pcd文件
     # 实例化一个指定类型的点云对象，并将文件读到对象里
     # obj = pclpy.pcl.PointCloud.PointXYZRGBA()
