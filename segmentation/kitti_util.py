@@ -272,7 +272,10 @@ def dealdata2pickle(spos, epos, file_num, split):
     label_path = os.path.join(DATA_DIR, 'training', 'label_2')
     calib_path = os.path.join(DATA_DIR, 'training', 'calib')
 
-    rsl = random.sample(range(spos, epos), file_num)
+    if file_num != -1:
+        rsl = random.sample(range(spos, epos), file_num)
+    else:
+        rsl = range(spos, epos)
     # totol = epos - spos
     # for data_id in range(file_num):
     # for data_id in range(spos, epos):
@@ -411,9 +414,7 @@ def main():
 
 
 if __name__ == '__main__':
-    # typelist = {b'Pedestrian': 4487, b'Truck': 1094, b'Car': 28742, b'Cyclist': 1627, b'DontCare': 11295, b'Misc': 973,
-    #             b'Van': 2914, b'Tram': 511, b'Person_sitting': 222}
-    # file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
-    # file_num = getfilenum(file_num_path)
-    # dealdata2pickle(file_num)
-    main()
+    # main()
+    file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
+    file_num = getfilenum(file_num_path)
+    dealdata2pickle(0, file_num, -1, 'train')
