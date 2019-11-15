@@ -354,7 +354,7 @@ def dealdata2pickle(spos, epos, file_num, split):
 
                 points[filt, 3] = labelid
 
-        points_o, labels = points[:, :-1], points[:, -1:].reshape(points_shape[0], )
+        points_o, labels = points[:, :-1].astype(np.float32), points[:, -1:].reshape(points_shape[0], ).astype(np.int32)
         points_o_list.append(points_o)
         labelslist.append(labels)
         # print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, get_memory_info(),
@@ -417,11 +417,13 @@ if __name__ == '__main__':
     # main()
     file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
     file_num = getfilenum(file_num_path)
-    dealdata2pickle(0, 1000, -1, 'train')
-    dealdata2pickle(1000, 2000, -1, 'train1')
-    dealdata2pickle(2000, 3000, -1, 'train2')
-    dealdata2pickle(3000, 4000, -1, 'train3')
-    dealdata2pickle(4000, 5000, -1, 'train4')
-    dealdata2pickle(5000, 6000, -1, 'train5')
-    dealdata2pickle(6000, 7000, -1, 'train6')
-    dealdata2pickle(7000, file_num, -1, 'train7')
+    for i in range(1):
+        dealdata2pickle(i * 1000, (i + 1) * 1000, -1, 'train%s' % i)
+    # dealdata2pickle(0, 1000, -1, 'train')
+    # dealdata2pickle(1000, 2000, -1, 'train1')
+    # dealdata2pickle(2000, 3000, -1, 'train2')
+    # dealdata2pickle(3000, 4000, -1, 'train3')
+    # dealdata2pickle(4000, 5000, -1, 'train4')
+    # dealdata2pickle(5000, 6000, -1, 'train5')
+    # dealdata2pickle(6000, 7000, -1, 'train6')
+    # dealdata2pickle(7000, file_num, -1, 'train7')
