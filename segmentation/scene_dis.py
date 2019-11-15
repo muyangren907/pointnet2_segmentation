@@ -80,9 +80,9 @@ def data2pcd(scene_points, semantic_labels):
         with open(rgb_list_file, 'rb') as fp:
             rgb_list = pickle.load(fp)
     else:
-        print('Generate rbg file')
+        print('Generate RGB file')
         rgb_list = generate_rgb(NUM_CLASSES)
-        print('Save rbg file at %s' % rgb_list_file)
+        print('Save RGB file at %s' % rgb_list_file)
         with open(rgb_list_file, 'wb') as fp:
             pickle.dump(rgb_list, fp)
 
