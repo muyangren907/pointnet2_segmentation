@@ -100,7 +100,7 @@ def data2pcd(scene_points, semantic_labels):
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     save_file = os.path.join(save_path, '%06d.pcd' % SID)
-    with open(save_file, 'a') as sf:
+    with open(save_file, 'w') as sf:
         sf.write(conststr)
         np.savetxt(sf, scene_points_o)
 
