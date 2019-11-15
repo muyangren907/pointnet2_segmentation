@@ -417,8 +417,9 @@ if __name__ == '__main__':
     # main()
     file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
     file_num = getfilenum(file_num_path)
-    for i in range(1):
+    for i in range(7):
         dealdata2pickle(i * 1000, (i + 1) * 1000, -1, 'train%s' % i)
+    dealdata2pickle(7000, file_num, -1, 'train7')
     # dealdata2pickle(0, 1000, -1, 'train')
     # dealdata2pickle(1000, 2000, -1, 'train1')
     # dealdata2pickle(2000, 3000, -1, 'train2')

@@ -99,8 +99,7 @@ def data2pcd(scene_points, semantic_labels):
     # label_classes = len(label_count)
     # rgb_list = generate_rgb(label_classes)
     label_list = np.unique(semantic_labels)
-    print(label_list)
-
+    # print(label_list)
     rgb_list_path = os.path.join(DATA_DIR, 'PCD', DATASET)
     if not os.path.exists(rgb_list_path):
         os.makedirs(rgb_list_path)
