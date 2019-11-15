@@ -62,9 +62,11 @@ def generate_rgb(rgb_num):
 def data2pcd(scene_points, semantic_labels):
     # pass
     # obj = pclpy.pcl.PointCloud.PointXYZRGB()
-    label_count = np.bincount(semantic_labels.astype(np.int32))
-    label_classes = len(label_count)
+    # label_count = np.bincount(semantic_labels.astype(np.int32))
+    # label_classes = len(label_count)
     # rgb_list = generate_rgb(label_classes)
+    label_list = np.unique(semantic_labels)
+
     rgb_list_path = os.path.join(DATA_DIR, 'PCD', DATASET)
     if not os.path.exists(rgb_list_path):
         os.makedirs(rgb_list_path)
@@ -83,7 +85,8 @@ def data2pcd(scene_points, semantic_labels):
     semantic_labels_len = semantic_labels.shape[0]
     zeros = np.zeros(semantic_labels_len)
     semantic_labels_tmp = np.c_[semantic_labels, zeros].astype(np.float32)
-    for i in range(label_classes):
+    # for i in range(label_classes):
+    for i in label_list:
         chose = semantic_labels_tmp[:, 0] == i
         semantic_labels_tmp[chose, 1] = rgb_list[i]
     rgb_info = semantic_labels_tmp[:, 1]
@@ -143,3 +146,11 @@ if __name__ == '__main__':
     else:
         data2pcd(scene_points_list[SID], semantic_labels_list[SID])
 
+    # a = np.array([1, 3, 3, 4, 1, 2, 3])
+    # b = np.unique(a)
+    # print(a)
+    # print(b)
+    # print(a.shape)
+    # print(b.shape)
+    # for i in b:
+    #     print(i)
