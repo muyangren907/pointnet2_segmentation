@@ -80,7 +80,7 @@ def data2pcd(scene_points, semantic_labels):
         rgb_list = generate_rgb(NUM_CLASSES)
         print('Save rbg file at %s' % rgb_list_file)
         with open(rgb_list_file, 'wb') as fp:
-            rgb_list = pickle.dump(rgb_list, fp)
+            pickle.dump(rgb_list, fp)
 
     semantic_labels_len = semantic_labels.shape[0]
     zeros = np.zeros(semantic_labels_len)
