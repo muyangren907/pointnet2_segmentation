@@ -400,8 +400,8 @@ def main():
     global file_num
     file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
     file_num = getfilenum(file_num_path)
-    dealdata2pickle(0, 6000, 1000, 'train')
-    dealdata2pickle(6001, file_num, 400, 'test')
+    dealdata2pickle(0, 1000, -1, 'train')
+    dealdata2pickle(6000, 6400, -1, 'test')
     # for i in range(0, file_num, 1000):
     #     gc.collect()
     #     if i + 1000 < file_num:
