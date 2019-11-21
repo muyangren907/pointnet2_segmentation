@@ -278,7 +278,7 @@ def predict_one_epoch(sess, ops, train_writer):
 
         batch_data = batch_data.reshape(1, batch_data.shape[0], 3)
         batch_label = batch_label.reshape(1, batch_label.shape[0])
-        batch_smpw = np.ones(batch_label.shape[1]).reshape(1,batch_label.shape[1])
+        batch_smpw = np.ones(batch_label.shape[1]).reshape(1, batch_label.shape[1])
 
         # Augment batched point clouds by rotation
         aug_data = provider.rotate_point_cloud_z(batch_data)
@@ -293,8 +293,8 @@ def predict_one_epoch(sess, ops, train_writer):
         pred_val = np.argmax(pred_val, 2)
 
         # 数据放入list
-        point_epoch_list += batch_data
-        labels_epoch_list += pred_val
+        point_epoch_list.append(batch_data.reshape(batch_data.shape[1], batch_data.shape[2]))
+        labels_epoch_list.append(pred_val.reshape(pred_val.shape[1]))
         # correct = np.sum(pred_val == batch_label)
         # total_correct += correct
         total_seen += (BATCH_SIZE * NUM_POINT)
