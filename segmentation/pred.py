@@ -277,6 +277,7 @@ def predict_one_epoch(sess, ops, train_writer):
         batch_data, batch_label = PREDICT_DATASET[batch_idx]
 
         batch_data = batch_data.reshape(1, batch_data.shape[0], 3)
+        batch_label = batch_label.reshape(1, batch_data.shape[0])
 
         # Augment batched point clouds by rotation
         aug_data = provider.rotate_point_cloud_z(batch_data)
