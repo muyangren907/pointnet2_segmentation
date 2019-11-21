@@ -129,7 +129,7 @@ def predict():
     with tf.Graph().as_default():
         with tf.device('/gpu:' + str(GPU_INDEX)):
             # pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT)
-            pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, -1)
+            pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, None)
             is_training_pl = tf.placeholder(tf.bool, shape=())
             print(is_training_pl)
 
