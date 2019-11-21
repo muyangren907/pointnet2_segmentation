@@ -272,7 +272,7 @@ def predict_one_epoch(sess, ops, train_writer):
         # Augment batched point clouds by rotation
         aug_data = provider.rotate_point_cloud_z(batch_data)
         feed_dict = {ops['pointclouds_pl']: aug_data,
-                     # ops['labels_pl']: batch_label,
+                     ops['labels_pl']: batch_label,
                      ops['smpws_pl']: batch_smpw,
                      ops['is_training_pl']: is_training, }
         summary, step, _, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
