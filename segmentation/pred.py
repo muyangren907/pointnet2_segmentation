@@ -87,10 +87,6 @@ NUM_CLASSES, STEP = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 
 TRAIN_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='train',
                                 datasetname=DATASET)
-TEST_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='test',
-                               datasetname=DATASET)
-TEST_DATASET_WHOLE_SCENE = dataset.DatasetWholeScene(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT,
-                                                     split='test', datasetname=DATASET, step=STEP)
 
 def log_string(out_str):
     LOG_FOUT.write(out_str + '\n')
@@ -259,7 +255,7 @@ def train_one_epoch(sess, ops, train_writer):
         # Augment batched point clouds by rotation
         aug_data = provider.rotate_point_cloud_z(batch_data)
         feed_dict = {ops['pointclouds_pl']: aug_data,
-                     ops['labels_pl']: batch_label,
+                     # ops['labels_pl']: batch_label,
                      ops['smpws_pl']: batch_smpw,
                      ops['is_training_pl']: is_training, }
         summary, step, _, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
@@ -267,17 +263,17 @@ def train_one_epoch(sess, ops, train_writer):
                                                         feed_dict=feed_dict)
         train_writer.add_summary(summary, step)
         pred_val = np.argmax(pred_val, 2)
-        correct = np.sum(pred_val == batch_label)
-        total_correct += correct
+        # correct = np.sum(pred_val == batch_label)
+        # total_correct += correct
         total_seen += (BATCH_SIZE * NUM_POINT)
-        loss_sum += loss_val
-        if (batch_idx + 1) % 10 == 0:
-            log_string(' -- %03d / %03d --' % (batch_idx + 1, num_batches))
-            log_string('mean loss: %f' % (loss_sum / 10))
-            log_string('accuracy: %f' % (total_correct / float(total_seen)))
-            total_correct = 0
-            total_seen = 0
-            loss_sum = 0
+        # loss_sum += loss_val
+        # if (batch_idx + 1) % 10 == 0:
+        #     log_string(' -- %03d / %03d --' % (batch_idx + 1, num_batches))
+        #     log_string('mean loss: %f' % (loss_sum / 10))
+        #     log_string('accuracy: %f' % (total_correct / float(total_seen)))
+        #     total_correct = 0
+        #     total_seen = 0
+        #     loss_sum = 0
 
 
 if __name__ == "__main__":
