@@ -85,7 +85,7 @@ if not os.path.exists(DATA_PATH):
 
 NUM_CLASSES, STEP = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 
-TRAIN_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='pre',
+PREDICT_DATASET = dataset.DatasetPredict(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='pre',
                                 datasetname=DATASET)
 
 
@@ -215,23 +215,24 @@ def predict():
             print('save', save_object_pickle_file, 'succeed!')
 
 
-def get_batch_wdp(dataset, idxs, start_idx, end_idx):
-    bsize = end_idx - start_idx
-    batch_data = np.zeros((bsize, NUM_POINT, 3))
-    batch_label = np.zeros((bsize, NUM_POINT), dtype=np.int32)
-    batch_smpw = np.zeros((bsize, NUM_POINT), dtype=np.float32)
-    for i in range(bsize):
-        ps, seg, smpw = dataset[idxs[i + start_idx]]
-        batch_data[i, ...] = ps
-        batch_label[i, :] = seg
-        batch_smpw[i, :] = smpw
-
-        dropout_ratio = np.random.random() * 0.875  # 0-0.875
-        drop_idx = np.where(np.random.random((ps.shape[0])) <= dropout_ratio)[0]
-        batch_data[i, drop_idx, :] = batch_data[i, 0, :]
-        batch_label[i, drop_idx] = batch_label[i, 0]
-        batch_smpw[i, drop_idx] *= 0
-    return batch_data, batch_label, batch_smpw
+# def get_batch_wdp(dataset, idxs, start_idx, end_idx):
+#     # bsize = end_idx - start_idx
+#     # batch_data = np.zeros((bsize, NUM_POINT, 3))
+#     # batch_label = np.zeros((bsize, NUM_POINT), dtype=np.int32)
+#     # batch_smpw = np.zeros((bsize, NUM_POINT), dtype=np.float32)
+#     # for i in range(bsize):
+#     #     ps, seg, smpw = dataset[idxs[i + start_idx]]
+#     #     batch_data[i, ...] = ps
+#     #     batch_label[i, :] = seg
+#     #     batch_smpw[i, :] = smpw
+#     #
+#     #     dropout_ratio = np.random.random() * 0.875  # 0-0.875
+#     #     drop_idx = np.where(np.random.random((ps.shape[0])) <= dropout_ratio)[0]
+#     #     batch_data[i, drop_idx, :] = batch_data[i, 0, :]
+#     #     batch_label[i, drop_idx] = batch_label[i, 0]
+#     #     batch_smpw[i, drop_idx] *= 0
+#     # return batch_data, batch_label, batch_smpw
+#     batch_data,batch_label = dataset
 
 
 def get_batch(dataset, idxs, start_idx, end_idx):
@@ -252,10 +253,11 @@ def predict_one_epoch(sess, ops, train_writer):
     is_training = True
 
     # Shuffle train samples
-    train_idxs = np.arange(0, len(TRAIN_DATASET))
+    # train_idxs = np.arange(0, len(TRAIN_DATASET))
     # 预测不需要打乱
     # np.random.shuffle(train_idxs)
-    num_batches = len(TRAIN_DATASET) // BATCH_SIZE
+    # num_batches = len(TRAIN_DATASET) // BATCH_SIZE
+    num_batches = len(PREDICT_DATASET)
 
     log_string(str(datetime.now()))
 
@@ -268,12 +270,13 @@ def predict_one_epoch(sess, ops, train_writer):
     for batch_idx in range(num_batches):
         start_idx = batch_idx * BATCH_SIZE
         end_idx = (batch_idx + 1) * BATCH_SIZE
-        batch_data, batch_label, batch_smpw = get_batch_wdp(TRAIN_DATASET, train_idxs, start_idx, end_idx)
+        # batch_data, batch_label, batch_smpw = get_batch_wdp(TRAIN_DATASET, train_idxs, start_idx, end_idx)
+        batch_data, batch_label = PREDICT_DATASET[batch_idx]
         # Augment batched point clouds by rotation
         aug_data = provider.rotate_point_cloud_z(batch_data)
         feed_dict = {ops['pointclouds_pl']: aug_data,
                      ops['labels_pl']: batch_label,
-                     ops['smpws_pl']: batch_smpw,
+                     # ops['smpws_pl']: batch_smpw,
                      ops['is_training_pl']: is_training, }
         summary, step, _, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
                                                          ops['train_op'], ops['loss'], ops['pred']],
