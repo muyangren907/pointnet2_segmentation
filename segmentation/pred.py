@@ -207,6 +207,9 @@ def predict():
             log_string("Model load from file: %s" % best_model_file)
 
         save_object_pickle_path = os.path.join(DATA_PATH, 'predict')
+        if not os.path.exists(save_object_pickle_path):
+            os.makedirs(save_object_pickle_path)
+
         for epoch in range(MAX_EPOCH):
             log_string('\n**** EPOCH %03d ****' % epoch)
             sys.stdout.flush()
