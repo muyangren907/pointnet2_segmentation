@@ -398,7 +398,7 @@ def deal_pre_data(spos, epos, file_num, split):
     if not os.path.exists(save_object_pickle_path):
         os.makedirs(save_object_pickle_path)
 
-    lidar_path = os.path.join(DATA_DIR, 'testning', 'velodyne')
+    lidar_path = os.path.join(DATA_DIR, 'testing', 'velodyne')
     if file_num != -1:
         rsl = random.sample(range(spos, epos), file_num)
     else:
