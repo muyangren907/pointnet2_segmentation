@@ -87,7 +87,7 @@ if not os.path.exists(DATA_PATH):
 NUM_CLASSES, STEP = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 
 PREDICT_DATASET = dataset.DatasetPredict(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='pre',
-                                datasetname=DATASET)
+                                         datasetname=DATASET)
 
 
 # if DATASET == 'kitti':
@@ -275,6 +275,9 @@ def predict_one_epoch(sess, ops, train_writer):
         end_idx = (batch_idx + 1) * BATCH_SIZE
         # batch_data, batch_label, batch_smpw = get_batch_wdp(TRAIN_DATASET, train_idxs, start_idx, end_idx)
         batch_data, batch_label = PREDICT_DATASET[batch_idx]
+
+        batch_data = batch_data.reshape(1, batch_data.shape[0], 3)
+
         # Augment batched point clouds by rotation
         aug_data = provider.rotate_point_cloud_z(batch_data)
         feed_dict = {ops['pointclouds_pl']: aug_data,
