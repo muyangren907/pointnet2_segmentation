@@ -35,7 +35,7 @@ parser.add_argument('--model_load', type=str, default='kitti.ckpt', help='Model 
 parser.add_argument('--log_dir', type=str, default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=8192, help='Point Number [default: 8192]')
 parser.add_argument('--max_epoch', type=int, default=201, help='Epoch to run [default: 201]')
-parser.add_argument('--batch_size', type=int, default=32, help='Batch Size during training [default: 32]')
+parser.add_argument('--batch_size', type=int, default=20, help='Batch Size during training [default: 20]')
 parser.add_argument('--learning_rate', type=float, default=0.001, help='Initial learning rate [default: 0.001]')
 parser.add_argument('--momentum', type=float, default=0.9, help='Initial learning rate [default: 0.9]')
 parser.add_argument('--optimizer', type=str, default='adam', help='adam or momentum [default: adam]')
