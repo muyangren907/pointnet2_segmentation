@@ -467,5 +467,5 @@ if __name__ == '__main__':
     # for i in range(7):
     #     dealdata2pickle(i * 1000, (i + 1) * 1000, -1, 'train%s' % i)
     # dealdata2pickle(7000, file_num, -1, 'train7')
-    
+
     deal_pre_data(0, 1000, -1, 'pre')

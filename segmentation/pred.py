@@ -8,6 +8,7 @@ import socket
 import importlib
 import os
 import sys
+import pickle
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -84,15 +85,16 @@ if not os.path.exists(DATA_PATH):
 
 NUM_CLASSES, STEP = dataset_util.deal_dataset(DATASET, DOWNLOADER, DATA_PATH)
 
-# TRAIN_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='train',
-#                                 datasetname=DATASET)
+TRAIN_DATASET = dataset.Dataset(root=DATA_PATH, num_classes=NUM_CLASSES, npoints=NUM_POINT, split='pre',
+                                datasetname=DATASET)
 
-if DATASET == 'kitti':
-    DATA_PRE_DIR = os.path.join(DATA_PATH, 'testing', 'velodyne')
-    data_pre_list = os.listdir(DATA_PRE_DIR)
-    data_num = len(data_pre_list)
 
-exit(0)
+# if DATASET == 'kitti':
+#     DATA_PRE_DIR = os.path.join(DATA_PATH, 'testing', 'velodyne')
+#     data_pre_list = os.listdir(DATA_PRE_DIR)
+#     data_num = len(data_pre_list)
+
+# exit(0)
 def log_string(out_str):
     LOG_FOUT.write(out_str + '\n')
     LOG_FOUT.flush()
@@ -121,7 +123,7 @@ def get_bn_decay(batch):
     return bn_decay
 
 
-def train():
+def predict():
     global EPOCH_CNT
     with tf.Graph().as_default():
         with tf.device('/gpu:' + str(GPU_INDEX)):
@@ -200,11 +202,17 @@ def train():
             saver.restore(sess, best_model_file)
             log_string("Model load from file: %s" % best_model_file)
 
+        save_object_pickle_path = os.path.join(DATA_PATH, 'predict')
         for epoch in range(MAX_EPOCH):
             log_string('\n**** EPOCH %03d ****' % epoch)
             sys.stdout.flush()
 
-            train_one_epoch(sess, ops, train_writer)
+            point_epoch_list, labels_epoch_list = predict_one_epoch(sess, ops, train_writer)
+            save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_predict_%03d.pickle' % epoch)
+            with open(save_object_pickle_file, 'wb') as pf:
+                pickle.dump(point_epoch_list, pf)
+                pickle.dump(labels_epoch_list, pf)
+            print('save', save_object_pickle_file, 'succeed!')
 
 
 def get_batch_wdp(dataset, idxs, start_idx, end_idx):
@@ -239,13 +247,14 @@ def get_batch(dataset, idxs, start_idx, end_idx):
     return batch_data, batch_label, batch_smpw
 
 
-def train_one_epoch(sess, ops, train_writer):
+def predict_one_epoch(sess, ops, train_writer):
     """ ops: dict mapping from string to tf ops """
     is_training = True
 
     # Shuffle train samples
     train_idxs = np.arange(0, len(TRAIN_DATASET))
-    np.random.shuffle(train_idxs)
+    # 预测不需要打乱
+    # np.random.shuffle(train_idxs)
     num_batches = len(TRAIN_DATASET) // BATCH_SIZE
 
     log_string(str(datetime.now()))
@@ -253,6 +262,9 @@ def train_one_epoch(sess, ops, train_writer):
     total_correct = 0
     total_seen = 0
     loss_sum = 0
+
+    point_epoch_list = []
+    labels_epoch_list = []
     for batch_idx in range(num_batches):
         start_idx = batch_idx * BATCH_SIZE
         end_idx = (batch_idx + 1) * BATCH_SIZE
@@ -268,6 +280,10 @@ def train_one_epoch(sess, ops, train_writer):
                                                         feed_dict=feed_dict)
         train_writer.add_summary(summary, step)
         pred_val = np.argmax(pred_val, 2)
+
+        # 数据放入list
+        point_epoch_list += batch_data
+        labels_epoch_list += pred_val
         # correct = np.sum(pred_val == batch_label)
         # total_correct += correct
         total_seen += (BATCH_SIZE * NUM_POINT)
@@ -279,9 +295,10 @@ def train_one_epoch(sess, ops, train_writer):
         #     total_correct = 0
         #     total_seen = 0
         #     loss_sum = 0
+    return point_epoch_list, labels_epoch_list
 
 
 if __name__ == "__main__":
     log_string('pid: %s' % (str(os.getpid())))
-    train()
+    predict()
     LOG_FOUT.close()

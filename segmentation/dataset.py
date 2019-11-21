@@ -38,7 +38,7 @@ class Dataset():
             labelweights = labelweights.astype(np.float32)
             labelweights = labelweights / np.sum(labelweights)
             self.labelweights = 1 / np.log(1.2 + labelweights)
-        elif split == 'test':
+        elif split == 'test' or split == 'pre':
             # self.labelweights = np.ones(21)
             self.labelweights = np.ones(num_classes)
 
