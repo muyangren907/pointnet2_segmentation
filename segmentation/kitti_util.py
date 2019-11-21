@@ -276,6 +276,7 @@ def dealdata2pickle(spos, epos, file_num, split):
         rsl = random.sample(range(spos, epos), file_num)
     else:
         rsl = range(spos, epos)
+        file_num = epos - spos
     # totol = epos - spos
     # for data_id in range(file_num):
     # for data_id in range(spos, epos):
@@ -388,6 +389,52 @@ def dealdata2pickle(spos, epos, file_num, split):
     print('save', save_object_pickle_file, 'succeed!')
 
 
+def deal_pre_data(spos, epos, file_num, split):
+    points_o_list, labelslist = [], []
+
+    # save_object_pickle_path = os.path.join(DATA_DIR, 'kitti')
+    save_object_pickle_path = os.path.join(DATA_DIR)
+
+    if not os.path.exists(save_object_pickle_path):
+        os.makedirs(save_object_pickle_path)
+
+    lidar_path = os.path.join(DATA_DIR, 'testning', 'velodyne')
+    if file_num != -1:
+        rsl = random.sample(range(spos, epos), file_num)
+    else:
+        rsl = range(spos, epos)
+        file_num = epos - spos
+    # totol = epos - spos
+    # for data_id in range(file_num):
+    # for data_id in range(spos, epos):
+    index = 1
+    for data_id in rsl:
+        lidar_file = os.path.join(lidar_path, '%06d.bin' % data_id)
+        # 加载点云数据
+        points = np.fromfile(lidar_file, dtype=np.float32).reshape(-1, 4)  # .astype(np.float16)
+        # 仅获取xyz坐标信息，忽略r
+        points = points[:, :-1]
+        # 获取points的shape
+        points_shape = points.shape
+        # zeros = np.zeros(points_shape[0])
+        zeros = np.zeros(points_shape[0])
+        # 扩充一列，用于记录标签id
+        # points = np.c_[points, zeros]
+        # points = np.c_[points, zeros]
+
+        points_o_list.append(points)
+        # 标签均处理成0
+        labelslist.append(zeros)
+
+        print('[', index, '/', file_num, ']', points.shape, zeros.shape, end='\r')
+        index += 1
+    save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_%s.pickle' % split)
+    with open(save_object_pickle_file, 'wb') as pf:
+        pickle.dump(points_o_list, pf)
+        pickle.dump(labelslist, pf)
+    print('save', save_object_pickle_file, 'succeed!')
+
+
 # 获取文件夹下文件个数
 def getfilenum(path):
     return len(os.listdir(path))
@@ -415,16 +462,10 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
-    file_num = getfilenum(file_num_path)
-    for i in range(7):
-        dealdata2pickle(i * 1000, (i + 1) * 1000, -1, 'train%s' % i)
-    dealdata2pickle(7000, file_num, -1, 'train7')
-    # dealdata2pickle(0, 1000, -1, 'train')
-    # dealdata2pickle(1000, 2000, -1, 'train1')
-    # dealdata2pickle(2000, 3000, -1, 'train2')
-    # dealdata2pickle(3000, 4000, -1, 'train3')
-    # dealdata2pickle(4000, 5000, -1, 'train4')
-    # dealdata2pickle(5000, 6000, -1, 'train5')
-    # dealdata2pickle(6000, 7000, -1, 'train6')
+    # file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
+    # file_num = getfilenum(file_num_path)
+    # for i in range(7):
+    #     dealdata2pickle(i * 1000, (i + 1) * 1000, -1, 'train%s' % i)
     # dealdata2pickle(7000, file_num, -1, 'train7')
+    
+    deal_pre_data(0, 1000, -1, 'pre')
