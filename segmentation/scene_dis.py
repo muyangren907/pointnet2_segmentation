@@ -11,12 +11,12 @@ import colorsys
 import random
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data', type=str, default='scannet', help='dataset')
+parser.add_argument('--data', type=str, default='kitti', help='dataset')
 parser.add_argument('--split', type=str, default='train', help='split')
 parser.add_argument('--sid', type=int, default=-1, help='index of scene')
 parser.add_argument('--sid_l', type=int, default=-1, help='low index of scene')
 parser.add_argument('--sid_h', type=int, default=-1, help='high index of scene')
-parser.add_argument('--num_c', type=int, default=21, help='num_classes')
+parser.add_argument('--num_c', type=int, default=9, help='num_classes')
 FLAGS = parser.parse_args()
 
 DATASET = FLAGS.data
