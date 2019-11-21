@@ -271,6 +271,7 @@ def predict_one_epoch(sess, ops, train_writer):
     point_epoch_list = []
     labels_epoch_list = []
     for batch_idx in range(num_batches):
+        print('[ %03d / %03d ]' % (batch_idx + 1, num_batches), end='\r')
         start_idx = batch_idx * BATCH_SIZE
         end_idx = (batch_idx + 1) * BATCH_SIZE
         # batch_data, batch_label, batch_smpw = get_batch_wdp(TRAIN_DATASET, train_idxs, start_idx, end_idx)
@@ -306,6 +307,7 @@ def predict_one_epoch(sess, ops, train_writer):
         #     total_correct = 0
         #     total_seen = 0
         #     loss_sum = 0
+
     return point_epoch_list, labels_epoch_list
 
 
