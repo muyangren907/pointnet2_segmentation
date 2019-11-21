@@ -35,7 +35,7 @@ parser.add_argument('--model_load', type=str, default='kitti.ckpt', help='Model 
 parser.add_argument('--log_dir', type=str, default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=8192, help='Point Number [default: 8192]')
 parser.add_argument('--max_epoch', type=int, default=201, help='Epoch to run [default: 201]')
-parser.add_argument('--batch_size', type=int, default=20, help='Batch Size during training [default: 20]')
+# parser.add_argument('--batch_size', type=int, default=1, help='Batch Size during training [default: 1]')
 parser.add_argument('--learning_rate', type=float, default=0.001, help='Initial learning rate [default: 0.001]')
 parser.add_argument('--momentum', type=float, default=0.9, help='Initial learning rate [default: 0.9]')
 parser.add_argument('--optimizer', type=str, default='adam', help='adam or momentum [default: adam]')
@@ -49,7 +49,8 @@ FLAGS = parser.parse_args()
 
 EPOCH_CNT = 0
 
-BATCH_SIZE = FLAGS.batch_size
+# BATCH_SIZE = FLAGS.batch_size
+BATCH_SIZE = 1
 NUM_POINT = FLAGS.num_point
 MAX_EPOCH = FLAGS.max_epoch
 BASE_LEARNING_RATE = FLAGS.learning_rate
@@ -127,7 +128,8 @@ def predict():
     global EPOCH_CNT
     with tf.Graph().as_default():
         with tf.device('/gpu:' + str(GPU_INDEX)):
-            pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT)
+            # pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT)
+            pointclouds_pl, labels_pl, smpws_pl = MODEL.placeholder_inputs(BATCH_SIZE, -1)
             is_training_pl = tf.placeholder(tf.bool, shape=())
             print(is_training_pl)
 
@@ -143,9 +145,10 @@ def predict():
             loss = MODEL.get_loss(pred, labels_pl, smpws_pl)
             tf.summary.scalar('loss', loss)
 
-            correct = tf.equal(tf.argmax(pred, 2), tf.to_int64(labels_pl))
-            accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) / float(BATCH_SIZE * NUM_POINT)
-            tf.summary.scalar('accuracy', accuracy)
+            # correct = tf.equal(tf.argmax(pred, 2), tf.to_int64(labels_pl))
+            # accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) / float(BATCH_SIZE * NUM_POINT)
+            # accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) / float(BATCH_SIZE * -1)
+            # tf.summary.scalar('accuracy', accuracy)
 
             print("--- Get training operator ---")
             # Get training operator
