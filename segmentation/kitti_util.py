@@ -462,8 +462,8 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    # file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
-    # file_num = getfilenum(file_num_path)
+    file_num_path = os.path.join(DATA_DIR, 'training', 'velodyne')
+    file_num = getfilenum(file_num_path)
     for i in range(7):
         dealdata2pickle(i * 1000, (i + 1) * 1000, -1, 'train%s' % i)
     dealdata2pickle(7000, file_num, -1, 'train7')
