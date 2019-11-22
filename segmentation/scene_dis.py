@@ -18,9 +18,9 @@ parser.add_argument('--split', type=str, default='train', help='split [default: 
 parser.add_argument('--sid', type=int, default=-1, help='index of scene [default: -1]')
 parser.add_argument('--sid_l', type=int, default=-1, help='low index of scene [default: -1]')
 parser.add_argument('--sid_h', type=int, default=-1, help='high index of scene [default: -1]')
-parser.add_argument('--num_c', type=int, default=-1, help='num_classes [default: -1]')
-parser.add_argument('--num_s', type=int, default=1000, help='Number of scenes per file [default: 1000]')
-parser.add_argument('--sleep_t', type=int, default=0, help='Sleep time [default: 0]')
+parser.add_argument('--num_c', type=int, default=-1, help='number of classes [default: -1]')
+parser.add_argument('--num_s', type=int, default=1000, help='number of scenes per file [default: 1000]')
+parser.add_argument('--sleep_t', type=int, default=0, help='sleep time [default: 0]')
 FLAGS = parser.parse_args()
 
 DATASET = FLAGS.data
