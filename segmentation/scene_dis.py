@@ -42,6 +42,11 @@ if NUM_CLASSES == -1:
                      'storage / basement / garage', 'misc']
         NUM_CLASSES = 21
 
+DET = 0
+if '_' in SPLIT:
+    DET = int(SPLIT.split('_')[1]) * 1000
+    SPLIT = SPLIT.split('_')[0]
+
 
 def read_data():
     data_filename = os.path.join(DATA_DIR, DATASET, '%s_%s.pickle' % (DATASET, SPLIT))
@@ -185,7 +190,7 @@ def data2pcd(scene_points, semantic_labels):
     # save_file = os.path.join(DATA_DIR, 'PCD', DATASET, SPLIT, '%06d.pcd' % SID)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    save_file = os.path.join(save_path, '%06d.pcd' % SID)
+    save_file = os.path.join(save_path, '%06d.pcd' % (SID + DET))
     with open(save_file, 'w') as sf:
         sf.write(conststr)
         np.savetxt(sf, scene_points_o)
