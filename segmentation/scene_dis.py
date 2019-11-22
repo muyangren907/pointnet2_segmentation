@@ -137,7 +137,7 @@ def label_pic(DATASET):
         rect = plt.Rectangle((1, i), 0.5, 0.5, color=(r / 255, g / 255, b / 255))
         ax.add_patch(rect)
         plt.text(2, i, str(i))
-        plt.text(3, i, label_str[i])
+        plt.text(5, i, label_str[i])
 
     plt.axis("equal")
     plt.axis('off')
