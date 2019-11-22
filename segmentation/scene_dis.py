@@ -17,7 +17,7 @@ parser.add_argument('--split', type=str, default='train', help='split')
 parser.add_argument('--sid', type=int, default=-1, help='index of scene')
 parser.add_argument('--sid_l', type=int, default=-1, help='low index of scene')
 parser.add_argument('--sid_h', type=int, default=-1, help='high index of scene')
-parser.add_argument('--num_c', type=int, default=9, help='num_classes')
+parser.add_argument('--num_c', type=int, default=-1, help='num_classes')
 FLAGS = parser.parse_args()
 
 DATASET = FLAGS.data
@@ -30,6 +30,12 @@ NUM_CLASSES = FLAGS.num_c
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
+
+if NUM_CLASSES == -1:
+    if DATASET == 'kitti':
+        NUM_CLASSES = 9
+    elif DATASET == 'scannet':
+        NUM_CLASSES = 21
 
 
 def read_data():

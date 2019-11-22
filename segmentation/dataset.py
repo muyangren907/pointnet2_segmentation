@@ -209,7 +209,12 @@ class DatasetPredict():
     def __getitem__(self, index):
         point_set_ini = self.scene_points_list[index]
         semantic_seg_ini = self.semantic_labels_list[index].astype(np.int32)
-        return point_set_ini, semantic_seg_ini
+
+        point_sets = point_set_ini.reshape(1, point_set_ini.shape[0], 3)
+        semantic_segs = semantic_seg_ini.reshape(1, semantic_seg_ini.shape[0])
+        sample_weights = np.ones(semantic_seg_ini.shape[1]).reshape(1, semantic_seg_ini.shape[1])
+
+        return point_sets, semantic_segs, sample_weights
         # # 获取(x,y,z)每一项的最大值，不一定为同一个点
         # coordmax = np.max(point_set_ini, axis=0)
         # # 获取(x,y,z)每一项的最小值，不一定为同一个点

@@ -279,11 +279,11 @@ def predict_one_epoch(sess, ops, train_writer):
         start_idx = batch_idx * BATCH_SIZE
         end_idx = (batch_idx + 1) * BATCH_SIZE
         # batch_data, batch_label, batch_smpw = get_batch_wdp(TRAIN_DATASET, train_idxs, start_idx, end_idx)
-        batch_data, batch_label = PREDICT_DATASET[batch_idx]
+        batch_data, batch_label, batch_smpw = PREDICT_DATASET[batch_idx]
 
-        batch_data = batch_data.reshape(1, batch_data.shape[0], 3)
-        batch_label = batch_label.reshape(1, batch_label.shape[0])
-        batch_smpw = np.ones(batch_label.shape[1]).reshape(1, batch_label.shape[1])
+        # batch_data = batch_data.reshape(1, batch_data.shape[0], 3)
+        # batch_label = batch_label.reshape(1, batch_label.shape[0])
+        # batch_smpw = np.ones(batch_label.shape[1]).reshape(1, batch_label.shape[1])
 
         # Augment batched point clouds by rotation
         aug_data = provider.rotate_point_cloud_z(batch_data)
