@@ -2,6 +2,7 @@ import pickle
 import os
 import argparse
 import numpy as np
+import matplotlib.pyplot as plt
 # import cupy as np
 # import minpy as np
 # pclpy only support on windows
@@ -46,6 +47,7 @@ def read_data():
             semantic_labels_list = pickle.load(fp, encoding='latin1')
     return scene_points_list, semantic_labels_list
 
+
 def get_n_hls_colors(num):
     hls_colors = []
     i = 0
@@ -83,29 +85,65 @@ def generate_rgb(rgb_num):
     #     range(0, 256), rgb_num)
     for rgbcolor in rgb_colors:
         # r, g, b = random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)
-        rgb = (rgbcolor[0] << 16 | rgbcolor[1] << 8 | rgbcolor[2])
-        b = pack('i', rgb)
-        frgb = unpack('f', b)[0]
+        # rgb = (rgbcolor[0] << 16 | rgbcolor[1] << 8 | rgbcolor[2])
+        # b = pack('i', rgb)
+        # frgb = unpack('f', b)[0]
+        frgb = rgb2frgb(rgbcolor[0], rgbcolor[1], rgbcolor[2])
         rgb_list.append(frgb)
     return rgb_list
+
+
+def frgb2rbg(frgb):
+    b = pack('f', frgb)
+    rgb = unpack('i', b)[0]
+    r, g, b = (rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff
+    return r, g, b
+
+
+def rgb2frgb(r, g, b):
+    rgb = (r << 16 | g << 8 | b)
+    b = pack('i', rgb)
+    frgb = unpack('f', b)[0]
+    return frgb
+
+
+def label_pic(DATASET):
+    rgb_list_path = os.path.join(DATA_DIR, 'PCD', DATASET)
+    if not os.path.exists(rgb_list_path):
+        os.makedirs(rgb_list_path)
+    rgb_list_file = os.path.join(rgb_list_path, '%s_rgb.pickle' % DATASET)
+
+    with open(rgb_list_file, 'rb') as fp:
+        rgb_list = pickle.load(fp)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)  # 创建子图
+
+    rgb_classes = len(rgb_list)
+    for i in range(rgb_classes):
+        frgb = rgb_list[i]
+        r, g, b = frgb2rbg(frgb)
+        rect = plt.Rectangle((i, 1), 0.5, 0.5, color=(r / 255, g / 255, b / 255))
+        plt.text(i, 0, str(i))
+        ax.add_patch(rect)
+
+    plt.axis("equal")
+    plt.axis('off')
+    plt_save_file = os.path.join(rgb_list_path, '%s.png' % DATASET)
+    plt.savefig(plt_save_file)
+    print('save', plt_save_file, 'succeed')
+    plt.clf()
 
 
 # 输入：一个场景点云三维坐标 和 标签
 # 输出：pcd彩色文件
 def data2pcd(scene_points, semantic_labels):
-    # pass
-    # obj = pclpy.pcl.PointCloud.PointXYZRGB()
-    # label_count = np.bincount(semantic_labels.astype(np.int32))
-    # label_classes = len(label_count)
-    # rgb_list = generate_rgb(label_classes)
     label_list = np.unique(semantic_labels)
-    # print(label_list)
     rgb_list_path = os.path.join(DATA_DIR, 'PCD', DATASET)
     if not os.path.exists(rgb_list_path):
         os.makedirs(rgb_list_path)
     rgb_list_file = os.path.join(rgb_list_path, '%s_rgb.pickle' % DATASET)
     if os.path.exists(rgb_list_file):
-        # print('Load rbg file from %s' % rgb_list_file)
         with open(rgb_list_file, 'rb') as fp:
             rgb_list = pickle.load(fp)
     else:
@@ -114,6 +152,10 @@ def data2pcd(scene_points, semantic_labels):
         print('Save RGB file at %s' % rgb_list_file)
         with open(rgb_list_file, 'wb') as fp:
             pickle.dump(rgb_list, fp)
+
+    label_pic_file = os.path.join(rgb_list_path, '%s.png' % DATASET)
+    if not os.path.exists(label_pic_file):
+        label_pic(DATASET)
 
     semantic_labels_len = semantic_labels.shape[0]
     zeros = np.zeros(semantic_labels_len)
@@ -156,17 +198,6 @@ def pcdview(file_path):
 
 
 if __name__ == '__main__':
-    # r = 109
-    # g = 114
-    # b = 134
-    # rgb = (r << 16 | g << 8 | b)
-    # print(rgb)
-    # b = pack('i', rgb)
-    # print(unpack('f', b)[0])
-    # a = 1
-    # b = 1.000
-    # print(a, b, a == b)
-
     scene_points_list, semantic_labels_list = read_data()
     list_len = len(scene_points_list)
     l, h = 0, list_len
@@ -180,12 +211,3 @@ if __name__ == '__main__':
             data2pcd(scene_points_list[SID], semantic_labels_list[SID])
     else:
         data2pcd(scene_points_list[SID], semantic_labels_list[SID])
-
-    # a = np.array([1, 3, 3, 4, 1, 2, 3])
-    # b = np.unique(a)
-    # print(a)
-    # print(b)
-    # print(a.shape)
-    # print(b.shape)
-    # for i in b:
-    #     print(i)
