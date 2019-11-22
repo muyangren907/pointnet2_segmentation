@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from struct import pack, unpack
 import colorsys
 import random
+import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--data', type=str, default='kitti', help='dataset [default: kitti]')
@@ -19,6 +20,7 @@ parser.add_argument('--sid_l', type=int, default=-1, help='low index of scene [d
 parser.add_argument('--sid_h', type=int, default=-1, help='high index of scene [default: -1]')
 parser.add_argument('--num_c', type=int, default=-1, help='num_classes [default: -1]')
 parser.add_argument('--num_s', type=int, default=1000, help='Number of scenes per file [default: 1000]')
+parser.add_argument('--sleep_t', type=int, default=0, help='Sleep time [default: 0]')
 FLAGS = parser.parse_args()
 
 DATASET = FLAGS.data
@@ -28,6 +30,7 @@ SID_L = FLAGS.sid_l
 SID_H = FLAGS.sid_h
 NUM_CLASSES = FLAGS.num_c
 NUM_SCENCE = FLAGS.num_s
+SLEEP_T = FLAGS.sleep_t
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -45,7 +48,6 @@ if NUM_CLASSES == -1:
         NUM_CLASSES = 21
 
 DET = 0
-
 
 
 def read_data():
@@ -221,6 +223,7 @@ if __name__ == '__main__':
         SPLIT = SPLIT.split('_')[0]
     list_len = len(scene_points_list)
     l, h = 0, list_len
+    del_c = 0
     if SID == -1:
         if SID_L != -1:
             l = SID_L
@@ -229,5 +232,11 @@ if __name__ == '__main__':
         for SID in range(l, h):
             print('[', SID + 1, '/', list_len, ']', end='\r')
             data2pcd(scene_points_list[SID], semantic_labels_list[SID])
+            del_c += 1
+            if del_c == 100:
+                del_c = 0
+                print('sleep', SLEEP_T, 's')
+                time.sleep(SLEEP_T)
+
     else:
         data2pcd(scene_points_list[SID], semantic_labels_list[SID])
