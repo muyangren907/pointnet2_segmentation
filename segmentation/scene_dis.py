@@ -33,8 +33,13 @@ DATA_DIR = os.path.join(ROOT_DIR, 'data')
 
 if NUM_CLASSES == -1:
     if DATASET == 'kitti':
+        label_str = ['Pedestrian', 'Person_sitting', 'Car', 'Van', 'Truck', 'Tram', 'Cyclist', 'Misc', 'DontCare']
         NUM_CLASSES = 9
     elif DATASET == 'scannet':
+        label_str = ['apartment', 'bathroom', 'bedroom / hotel', 'bookstore / library', 'classroom', 'closet',
+                     'computer cluster', 'conference room', 'copy / mail room', 'dining room', 'game room', 'gym',
+                     'hallway', 'kitchen', 'laundry room', 'living room / lounge', 'lobby', 'office', 'stairs',
+                     'storage / basement / garage', 'misc']
         NUM_CLASSES = 21
 
 
@@ -129,9 +134,10 @@ def label_pic(DATASET):
     for i in range(rgb_classes):
         frgb = rgb_list[i]
         r, g, b = frgb2rbg(frgb)
-        rect = plt.Rectangle((i, 1), 0.5, 0.5, color=(r / 255, g / 255, b / 255))
-        plt.text(i, 0, str(i))
+        rect = plt.Rectangle((1, i), 0.5, 0.5, color=(r / 255, g / 255, b / 255))
         ax.add_patch(rect)
+        plt.text(2, i, str(i))
+        plt.text(3, i, label_str[i])
 
     plt.axis("equal")
     plt.axis('off')
