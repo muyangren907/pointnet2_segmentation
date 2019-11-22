@@ -45,9 +45,7 @@ if NUM_CLASSES == -1:
         NUM_CLASSES = 21
 
 DET = 0
-if '_' in SPLIT:
-    DET = int(SPLIT.split('_')[1]) * NUM_SCENCE
-    SPLIT = SPLIT.split('_')[0]
+
 
 
 def read_data():
@@ -218,6 +216,9 @@ def pcdview(file_path):
 
 if __name__ == '__main__':
     scene_points_list, semantic_labels_list = read_data()
+    if '_' in SPLIT:
+        DET = int(SPLIT.split('_')[1]) * NUM_SCENCE
+        SPLIT = SPLIT.split('_')[0]
     list_len = len(scene_points_list)
     l, h = 0, list_len
     if SID == -1:
