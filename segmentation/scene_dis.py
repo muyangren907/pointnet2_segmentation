@@ -18,6 +18,7 @@ parser.add_argument('--sid', type=int, default=-1, help='index of scene [default
 parser.add_argument('--sid_l', type=int, default=-1, help='low index of scene [default: -1]')
 parser.add_argument('--sid_h', type=int, default=-1, help='high index of scene [default: -1]')
 parser.add_argument('--num_c', type=int, default=-1, help='num_classes [default: -1]')
+parser.add_argument('--num_s', type=int, default=1000, help='Number of scenes per file [default: 1000]')
 FLAGS = parser.parse_args()
 
 DATASET = FLAGS.data
@@ -26,6 +27,7 @@ SID = FLAGS.sid
 SID_L = FLAGS.sid_l
 SID_H = FLAGS.sid_h
 NUM_CLASSES = FLAGS.num_c
+NUM_SCENCE = FLAGS.num_s
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -44,7 +46,7 @@ if NUM_CLASSES == -1:
 
 DET = 0
 if '_' in SPLIT:
-    DET = int(SPLIT.split('_')[1]) * 1000
+    DET = int(SPLIT.split('_')[1]) * NUM_SCENCE
     SPLIT = SPLIT.split('_')[0]
 
 
