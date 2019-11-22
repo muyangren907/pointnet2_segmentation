@@ -233,7 +233,7 @@ if __name__ == '__main__':
             print('[', SID + 1, '/', list_len, ']', end='\r')
             data2pcd(scene_points_list[SID], semantic_labels_list[SID])
             del_c += 1
-            if del_c == 100:
+            if del_c == 10:
                 del_c = 0
                 print('sleep', SLEEP_T, 's')
                 time.sleep(SLEEP_T)
