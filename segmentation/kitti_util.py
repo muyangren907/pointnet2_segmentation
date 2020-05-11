@@ -341,18 +341,8 @@ def dealdata2pickle(spos, epos, file_num, split):
                 filt = np.logical_and(x_filt, y_filt)  # 必须同时成立
                 filt = np.logical_and(filt, z_filt)  # 必须同时成立
 
-                # labelid = 4
                 # 标签id定义
-                # if label['type'] in [b'Pedestrian', b'Person_sitting']:
-                #     labelid = 0
-                # elif label['type'] in [b'Car', b'Van', b'Truck', b'Tram']:
-                #     labelid = 1
-                # elif label['type'] in [b'Cyclist']:
-                #     labelid = 2
                 labelid = label_list.index(label['type'])
-                # elif label['type'] in [b'Misc']:
-                #     labelid = 3
-
                 points[filt, 3] = labelid
 
         points_o, labels = points[:, :-1].astype(np.float32), points[:, -1:].reshape(points_shape[0], ).astype(np.int32)
@@ -363,25 +353,7 @@ def dealdata2pickle(spos, epos, file_num, split):
         # print('[', data_id + 1, '/', file_num, ']', points_o.shape, labels.shape, end='\r')
         print('[', index, '/', file_num, ']', points_o.shape, labels.shape, end='\r')
         index += 1
-        # if (data_id + 1) % 1000 == 0:
-        #     file_name = ''
-        #     if data_id // 1000 == 0:
-        #         file_name = 'kitti_train.pickle'
-        #     else:
-        #         file_name = 'kitti_train_%s.pickle' % (data_id // 1000)
-        #     save_object_pickle_file = os.path.join(save_object_pickle_path, file_name)
-        #     with open(save_object_pickle_file, 'wb') as pf:
-        #         pickle.dump(points_o_list, pf)
-        #         pickle.dump(labelslist, pf)
-        #     print('save', save_object_pickle_file, 'succeed!')
-        #     return
-        # if data_id + 1 == 1300:
-        #     save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_test.pickle')
-        #     with open(save_object_pickle_file, 'wb') as pf:
-        #         pickle.dump(points_o_list, pf)
-        #         pickle.dump(labelslist, pf)
-        #     print('save', save_object_pickle_file, 'succeed!')
-        #     return
+        
     save_object_pickle_file = os.path.join(save_object_pickle_path, 'kitti_%s.pickle' % split)
     with open(save_object_pickle_file, 'wb') as pf:
         pickle.dump(points_o_list, pf)
