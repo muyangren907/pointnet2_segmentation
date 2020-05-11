@@ -41,10 +41,10 @@ if NUM_CLASSES == -1:
         label_str = ['Pedestrian', 'Person_sitting', 'Car', 'Van', 'Truck', 'Tram', 'Cyclist', 'Misc', 'DontCare']
         NUM_CLASSES = 9
     elif DATASET == 'scannet':
-        label_str = ['apartment', 'bathroom', 'bedroom / hotel', 'bookstore / library', 'classroom', 'closet',
-                     'computer cluster', 'conference room', 'copy / mail room', 'dining room', 'game room', 'gym',
-                     'hallway', 'kitchen', 'laundry room', 'living room / lounge', 'lobby', 'office', 'stairs',
-                     'storage / basement / garage', 'misc']
+        label_str = ['wall', 'floor', 'cabinet', 'bed', 'chair', 'sofa',
+                     'table', 'door', 'window', 'bookshelf', 'picture', 'counter',
+                     'desk', 'curtain', 'refridgerator', 'shower curtain', 'toilet', 'sink', 'bathtub',
+                     'otherfurniture', 'misc']
         NUM_CLASSES = 21
 
 DET = 0
